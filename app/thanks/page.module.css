@@ -1,0 +1,102 @@
+.section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 20px;
+  text-align: center;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.iconMobile {
+  display: flex;
+}
+
+.iconDesktop {
+  display: none;
+}
+
+.title {
+  font-size: 32px;
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.text {
+  margin-top: 14px;
+  font-size: 17px;
+  color: var(--ink2);
+}
+
+.link {
+  color: var(--accent-text);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.home {
+  margin-top: 32px;
+  align-self: stretch;
+  font-weight: 500;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 96px 20px;
+  }
+
+  .content {
+    width: 560px;
+  }
+
+  .badge {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 28px;
+  }
+
+  .iconMobile {
+    display: none;
+  }
+
+  .iconDesktop {
+    display: flex;
+  }
+
+  .title {
+    font-size: 48px;
+    line-height: 1.1;
+  }
+
+  .text {
+    margin-top: 18px;
+    font-size: 19px;
+  }
+
+  .home {
+    margin-top: 36px;
+    align-self: center;
+    height: 50px;
+    padding: 0 24px;
+  }
+}

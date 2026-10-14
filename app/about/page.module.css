@@ -1,0 +1,236 @@
+.intro {
+  padding: 28px 20px 40px;
+}
+
+.inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-text);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 36px;
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.lead {
+  margin-top: 24px;
+  font-size: 20px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+
+.paragraph {
+  margin-top: 18px;
+  font-size: 17px;
+  color: var(--ink2);
+}
+
+.israel {
+  padding: 0 20px 40px;
+}
+
+.israelInner {
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.israelTitle {
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.factTitle {
+  margin-bottom: 6px;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.factText {
+  color: var(--ink2);
+}
+
+.factTextDesktop {
+  display: none;
+}
+
+.cards {
+  padding: 0 20px 56px;
+}
+
+.cardsInner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  border-radius: 16px;
+  padding: 22px 20px;
+}
+
+.cardShipper {
+  color: var(--ink);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.cardCarrier {
+  color: var(--accent-ink);
+  background: var(--accent);
+}
+
+.cardEyebrow {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cardShipper .cardEyebrow {
+  color: var(--accent-text);
+}
+
+.cardCarrier .cardEyebrow {
+  opacity: 0.85;
+}
+
+.cardTitle {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 2px;
+}
+
+.cardArrow {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.cardShipper .cardArrow {
+  color: var(--accent-text);
+}
+
+.arrowMobile {
+  display: flex;
+}
+
+.arrowDesktop {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .intro {
+    padding: 96px 20px;
+  }
+
+  .inner {
+    display: grid;
+    grid-template-columns: 380px minmax(0, 1fr);
+    gap: 96px;
+  }
+
+  .eyebrow {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 56px;
+    line-height: 1.05;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    max-width: 720px;
+    padding-top: 44px;
+  }
+
+  .lead {
+    margin-top: 0;
+    font-size: 26px;
+    line-height: 1.4;
+  }
+
+  .paragraph {
+    margin-top: 0;
+    font-size: 18px;
+  }
+
+  .israel {
+    padding: 0 20px 96px;
+  }
+
+  .israelInner {
+    display: grid;
+    grid-template-columns: 380px repeat(2, minmax(0, 1fr));
+    gap: 48px;
+    padding-top: 48px;
+  }
+
+  .israelTitle {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  .factTitle {
+    margin-bottom: 8px;
+    font-size: 21px;
+  }
+
+  .factTextMobile {
+    display: none;
+  }
+
+  .factTextDesktop {
+    display: block;
+  }
+
+  .cards {
+    padding: 0 20px 104px;
+  }
+
+  .cardsInner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    padding: 32px 36px;
+  }
+
+  .cardTitle {
+    font-size: 26px;
+    margin-top: 4px;
+  }
+
+  .arrowMobile {
+    display: none;
+  }
+
+  .arrowDesktop {
+    display: flex;
+  }
+}
