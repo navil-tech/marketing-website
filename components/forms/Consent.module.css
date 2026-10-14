@@ -1,0 +1,9 @@
+.consent {
+  font-size: 13px;
+  color: var(--ink3);
+}
+
+.link {
+  color: var(--ink3);
+  text-decoration: underline;
+}

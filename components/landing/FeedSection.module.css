@@ -1,0 +1,291 @@
+.section {
+  padding: 0 20px 48px;
+}
+
+.card {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 20px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 28px 20px;
+}
+
+.title {
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.feedTitle {
+  margin-bottom: 10px;
+}
+
+.feedText {
+  margin-bottom: 20px;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.feed {
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--on-accent-card);
+}
+
+.feedHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.feedLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-ink);
+  transition: opacity 0.8s;
+}
+
+.dotDim {
+  opacity: 0.35;
+}
+
+.example {
+  opacity: 0.75;
+}
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--on-accent-card);
+  color: var(--accent-ink);
+  transition: background 0.5s, color 0.5s;
+}
+
+.orderFirst {
+  background: var(--accent-ink);
+  color: var(--ink);
+}
+
+.orderHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.orderRoute {
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.badge {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  opacity: 0;
+}
+
+.badgeVisible {
+  opacity: 1;
+}
+
+.badgeLong {
+  display: none;
+}
+
+.orderMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.orderWhen {
+  flex-shrink: 0;
+}
+
+.divider {
+  height: 1px;
+  background: var(--on-accent-line);
+  margin: 32px 0;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.amount {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.now {
+  font-size: 17px;
+}
+
+.free {
+  margin-top: 12px;
+  font-size: 17px;
+}
+
+.priceText {
+  margin-top: 12px;
+  opacity: 0.9;
+}
+
+.founder {
+  margin-top: 24px;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid var(--on-accent-line);
+}
+
+.founderBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-ink);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px 4px 8px;
+  border-radius: 6px;
+}
+
+.founderText {
+  margin-top: 10px;
+}
+
+.cta {
+  margin-top: 24px;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 0 20px 104px;
+  }
+
+  .card {
+    padding: 56px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 64px;
+    align-items: start;
+  }
+
+  .title {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  .feedText {
+    margin-bottom: 28px;
+    font-size: 18px;
+  }
+
+  .feed {
+    padding: 16px;
+  }
+
+  .order {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 12px;
+    align-items: center;
+  }
+
+  .orderHead,
+  .orderMeta {
+    display: contents;
+  }
+
+  .orderRoute {
+    line-height: 1.6;
+  }
+
+  .badge {
+    font-size: 12px;
+  }
+
+  .badgeLong {
+    display: inline;
+  }
+
+  .badgeShort {
+    display: none;
+  }
+
+  .orderMeta > span {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .priceRow {
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .amount {
+    font-size: 64px;
+  }
+
+  .now {
+    font-size: 18px;
+  }
+
+  .free {
+    margin-top: 14px;
+    font-size: 18px;
+  }
+
+  .priceText {
+    margin-top: 14px;
+  }
+
+  .founder {
+    margin-top: 28px;
+    padding: 22px;
+  }
+
+  .founderText {
+    margin-top: 12px;
+  }
+
+  .cta {
+    margin-top: 28px;
+    width: auto;
+  }
+}
