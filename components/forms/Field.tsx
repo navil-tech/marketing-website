@@ -21,7 +21,16 @@ interface SelectFieldProps {
   required: boolean;
 }
 
-export function TextField({ id, name, label, hint, type, autoComplete, placeholder, required }: TextFieldProps): JSX.Element {
+export function TextField({
+  id,
+  name,
+  label,
+  hint,
+  type,
+  autoComplete,
+  placeholder,
+  required,
+}: TextFieldProps): JSX.Element {
   return (
     <div className={styles.field}>
       <label htmlFor={id} className={styles.label}>

@@ -159,7 +159,10 @@
   background: var(--surface);
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.4s;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease,
+    border-color 0.4s;
 }
 
 .offerShown {

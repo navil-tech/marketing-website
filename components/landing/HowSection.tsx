@@ -138,7 +138,9 @@ function PhoneScreen({ state }: PhoneScreenProps): JSX.Element {
                 </div>
                 <div className={styles.offerMetaRow}>
                   <span className={styles.offerMeta}>{offer.meta}</span>
-                  <span className={`${styles.tag} ${picked || fresh ? styles.tagVisible : ""} ${picked ? styles.tagPicked : ""}`}>
+                  <span
+                    className={`${styles.tag} ${picked || fresh ? styles.tagVisible : ""} ${picked ? styles.tagPicked : ""}`}
+                  >
                     {picked ? t("how.demo.tagPicked") : t("how.demo.tagNew")}
                   </span>
                 </div>

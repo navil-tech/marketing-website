@@ -27,7 +27,12 @@ export function FaqSection({ namespace }: FaqSectionProps): JSX.Element {
         </div>
         <div>
           <Faq items={items} />
-          <ButtonLink href={routes.form} variant="primary" size="md" className={`${styles.blockCta} ${styles.faqCtaMobile}`}>
+          <ButtonLink
+            href={routes.form}
+            variant="primary"
+            size="md"
+            className={`${styles.blockCta} ${styles.faqCtaMobile}`}
+          >
             {t("faq.cta")}
             <ArrowUp size={18} strokeWidth={2.2} />
           </ButtonLink>
