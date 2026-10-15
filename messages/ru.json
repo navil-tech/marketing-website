@@ -13,10 +13,14 @@
     "language": "Язык",
     "languageGroup": "Язык сайта",
     "languages": {
-      "ru": "RU"
+      "ru": "RU",
+      "en": "EN",
+      "he": "עב"
     },
     "languagesLong": {
-      "ru": "RU"
+      "ru": "Русский",
+      "en": "English",
+      "he": "עברית"
     },
     "carrierCta": "Я перевозчик",
     "shipperCta": "Я хочу перевезти"

@@ -1,0 +1,302 @@
+{
+  "header": {
+    "brand": "Novil",
+    "nav": {
+      "shippers": "Shippers",
+      "carriers": "Carriers",
+      "about": "About"
+    },
+    "themeToggle": "Switch theme",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuLabel": "Main menu",
+    "language": "Language",
+    "languageGroup": "Site language",
+    "languages": {
+      "ru": "RU",
+      "en": "EN",
+      "he": "עב"
+    },
+    "languagesLong": {
+      "ru": "Русский",
+      "en": "English",
+      "he": "עברית"
+    },
+    "carrierCta": "I'm a carrier",
+    "shipperCta": "I need to ship"
+  },
+  "footer": {
+    "title": "Contact",
+    "subtitle": "We reply within a day.",
+    "emailLabel": "Email",
+    "emailValue": "[address]",
+    "phoneLabel": "Phone and WhatsApp",
+    "phoneValue": "[number]",
+    "brand": "Novil",
+    "description": "Novil is a marketplace for finding freight carriers. Gush Dan, Israel.",
+    "serviceTitle": "Service",
+    "documentsTitle": "Documents",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "contactTitle": "Get in touch",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "copyright": "© 2026 Novil"
+  },
+  "fields": {
+    "name": "Name *",
+    "email": "Email *",
+    "emailPlaceholder": "name@example.com",
+    "phone": "Phone",
+    "phoneHint": "— optional",
+    "phonePlaceholder": "050-123-4567",
+    "region": "Area *",
+    "regionPlaceholder": "Select",
+    "vehicle": "Vehicle type *",
+    "vehiclePlaceholder": "E.g. 3-ton van with a tail lift"
+  },
+  "shippers": {
+    "metaTitle": "Novil — for shippers",
+    "eyebrow": "For shippers",
+    "title": "A truck without the ring-around",
+    "lead": "Describe the job — carriers in your area respond on their own and name their price.",
+    "heroCta": "Leave your details",
+    "checklist": [
+      "The price is fixed up front and doesn't change on the spot.",
+      "Carriers are verified: licence, documents, insurance.",
+      "Only people who actually had a move can leave a review.",
+      "Free for you — you pay only for the move itself."
+    ],
+    "note": "We haven't launched yet. Leave your details and we'll write when we open access in your area.",
+    "form": {
+      "title": "Leave your details",
+      "subtitle": "We'll write when we open access in your area. Takes half a minute.",
+      "submit": "Leave your details",
+      "consent": "We send nothing but launch news. By clicking the button you agree to the <link>privacy policy</link>.",
+      "regions": [
+        "Tel Aviv",
+        "Ramat Gan and Givatayim",
+        "Bat Yam and Holon",
+        "Petah Tikva",
+        "Rishon LeZion",
+        "Herzliya and Ra'anana",
+        "Bnei Brak",
+        "Other"
+      ]
+    },
+    "how": {
+      "title": "How it will work",
+      "subtitle": "Describe the job — the offers come to you.",
+      "steps": [
+        {
+          "title": "You describe the job",
+          "text": "What, from where, to where, when."
+        },
+        {
+          "title": "Carriers respond",
+          "text": "The job is seen by those working in your area. Each one names their own price."
+        },
+        {
+          "title": "You choose",
+          "text": "You see the price, the vehicle, the rating and reviews. The rest you discuss directly."
+        }
+      ],
+      "cta": "Leave a request",
+      "caption": "This is what it will look like",
+      "demo": {
+        "title": "My request",
+        "cargo": "Sofa, washing machine and 12 boxes",
+        "from": "Ramat Gan",
+        "to": "Holon",
+        "statusSearching": "Looking for carriers nearby…",
+        "statusResponding": "Carriers are responding",
+        "statusFound": "Truck found",
+        "responses": "{count, plural, one {# offer} other {# offers}}",
+        "offers": {
+          "van": "Van",
+          "truck": "Truck up to 4 t",
+          "lift": "With tail lift"
+        },
+        "offerMeta": "★ {rating} · {reviews, plural, one {# review} other {# reviews}} · verified",
+        "tagNew": "new",
+        "tagPicked": "Chosen ✓",
+        "footnote": "Price is fixed up front"
+      }
+    },
+    "leadCard": {
+      "eyebrow": "Pilot · free",
+      "title": "Leave a request",
+      "text": "We'll write when we open access in your area. Takes half a minute.",
+      "submit": "Leave a request",
+      "mobileCta": "Fill in the request",
+      "consent": "By clicking the button you agree to the <link>privacy policy</link>."
+    },
+    "faq": {
+      "title": "Shipper questions",
+      "text": "We'll tell you the rest in person — leave a request and we'll write.",
+      "cta": "Leave a request",
+      "items": [
+        {
+          "question": "How much does it cost the shipper?",
+          "answer": "Nothing. You pay only for the move, and directly to the carrier."
+        },
+        {
+          "question": "Who is responsible for the cargo?",
+          "answer": "The carrier. We check their documents, licence and insurance before they get access to jobs."
+        },
+        {
+          "question": "When is the launch?",
+          "answer": "The pilot starts in early 2027. We'll open the centre of the country first, then other areas as carriers join. Those who left their details will hear first."
+        },
+        {
+          "question": "I'm not in the centre of the country — is it worth leaving my details?",
+          "answer": "Yes. We collect requests from across the country and open areas as carriers join."
+        }
+      ]
+    }
+  },
+  "carriers": {
+    "metaTitle": "Novil — for carriers",
+    "eyebrow": "For carriers",
+    "title": "Jobs come to you",
+    "lead": "Less time looking for jobs — more time on the road. Clients from the whole area in one place.",
+    "heroCta": "Fill in the form",
+    "checklist": [
+      "Jobs come to you — a notification arrives and you decide whether to take it.",
+      "You name the price. The platform suggests a recommended one — as a guide, not a rule.",
+      "The client is real: phone verified, job described.",
+      "Payment for the move goes directly to you."
+    ],
+    "note": "We're recruiting the first carriers for the pilot. Participation is free.",
+    "form": {
+      "title": "Carrier form",
+      "subtitle": "Five questions so we know which jobs suit you.",
+      "submit": "Fill in the form",
+      "consent": "We'll check documents at onboarding. Nothing to upload now. By clicking the button you agree to the <link>privacy policy</link>.",
+      "regions": [
+        "Tel Aviv",
+        "Ramat Gan and Givatayim",
+        "Bat Yam and Holon",
+        "Petah Tikva",
+        "Rishon LeZion",
+        "Herzliya and Ra'anana",
+        "Bnei Brak",
+        "Whole country",
+        "Other"
+      ]
+    },
+    "feed": {
+      "title": "Clients find you",
+      "text": "The job is seen by those working in the client's area. You get a notification — the rest is up to you.",
+      "feedTitle": "New jobs in your area",
+      "example": "example",
+      "badge": "New job",
+      "badgeShort": "new",
+      "orders": {
+        "sofa": {
+          "route": "Bat Yam → Holon",
+          "what": "Sofa and 4 boxes"
+        },
+        "office": {
+          "route": "Petah Tikva → Tel Aviv",
+          "what": "Office furniture"
+        },
+        "fridge": {
+          "route": "Rishon LeZion → Ramat Gan",
+          "what": "Fridge"
+        },
+        "move": {
+          "route": "Herzliya → Ra'anana",
+          "what": "Move, 2 rooms"
+        },
+        "boxes": {
+          "route": "Bnei Brak → Givatayim",
+          "what": "12 boxes"
+        },
+        "washer": {
+          "route": "Tel Aviv → Bat Yam",
+          "what": "Washing machine"
+        }
+      }
+    },
+    "price": {
+      "title": "How much it costs",
+      "now": "now",
+      "free": "Taking part in the pilot is free.",
+      "text": "After the pilot there will be a paid subscription. We'll announce the terms at least a month ahead — you'll know in advance, not after.",
+      "founderBadge": "Founding carrier",
+      "founderText": "The first ten get this badge, priority in job listings and the best subscription terms.",
+      "cta": "Leave a request"
+    },
+    "leadCard": {
+      "eyebrow": "Pilot · free",
+      "title": "Leave a request",
+      "text": "We'll tell you about the pilot terms and connect you when we open your area.",
+      "submit": "Leave a request",
+      "mobileCta": "Fill in the form",
+      "consent": "By clicking the button you agree to the <link>privacy policy</link>."
+    },
+    "faq": {
+      "title": "Carrier questions",
+      "text": "We'll tell you the rest in person — leave a request and we'll write.",
+      "cta": "Leave a request",
+      "items": [
+        {
+          "question": "How much does it cost the carrier?",
+          "answer": "Nothing during the pilot. Then there will be a subscription: we'll announce the terms at least a month ahead and discuss them with the first participants. Founding carriers get better terms."
+        },
+        {
+          "question": "Do I need to upload documents right away?",
+          "answer": "No. We'll check documents, licence and insurance at onboarding — before you get access to jobs."
+        },
+        {
+          "question": "Can I skip working on Shabbat?",
+          "answer": "Yes. Each carrier states whether they work on Shabbat. Jobs on those days are shown only to those who do."
+        },
+        {
+          "question": "Are you a transport company?",
+          "answer": "No. We have no trucks of our own. We're a marketplace where the two sides find each other and agree directly."
+        }
+      ]
+    }
+  },
+  "about": {
+    "metaTitle": "Novil — about us",
+    "eyebrow": "About us",
+    "title": "It started with our own move",
+    "lead": "The idea came from our own move: half a day on the phone, three different prices for the same job, and in the end a deal with someone we knew nothing about.",
+    "paragraphs": [
+      "We looked at how this market works in Israel and saw that it's barely touched by digital. Thousands of carriers, hundreds of thousands of moves a year — and no shared place where you can see them. Everyone gets by on their own: some through groups, some through friends, some through middlemen who take a cut simply for having a phone book.",
+      "Novil is an attempt to bring this market into one place. We have no trucks of our own and we take no money for the move. Our job is for you to find each other and know who you're dealing with. We're at the very beginning, so we'll talk to the first participants personally."
+    ],
+    "israel": {
+      "title": "We're in Israel",
+      "facts": [
+        {
+          "title": "Shabbat",
+          "text": "Each carrier states whether they work on Shabbat. Jobs on those days are shown only to those who do.",
+          "mobileText": "Each carrier states whether they work on Shabbat. Jobs on those days are shown only to those who do."
+        },
+        {
+          "title": "Three languages",
+          "text": "Hebrew, Russian, English. The switch is in the site header.",
+          "mobileText": "Hebrew, Russian, English. The switch is in the site menu."
+        }
+      ]
+    },
+    "shipperCard": {
+      "eyebrow": "For shippers",
+      "title": "I need to ship"
+    },
+    "carrierCard": {
+      "eyebrow": "For carriers",
+      "title": "I'm a carrier"
+    }
+  },
+  "thanks": {
+    "metaTitle": "Novil — thank you",
+    "title": "Thanks, you're on the list.",
+    "text": "We'll be in touch in the next few days. If you want to ask something right now, write to us: <link>[contact]</link>",
+    "home": "Back to home"
+  }
+}

@@ -36,7 +36,7 @@
 }
 
 .themeToggle {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .menuButton {
@@ -192,7 +192,7 @@
   }
 
   .actions {
-    margin-left: auto;
+    margin-inline-start: auto;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -218,4 +218,8 @@
   .menu {
     display: none;
   }
+}
+
+:global([dir="rtl"]) .menuChevron {
+  transform: scaleX(-1);
 }
