@@ -1,32 +1,35 @@
+import { ArrowUp } from "lucide-react";
+import { useMessages, useTranslations } from "next-intl";
 import type { JSX } from "react";
 import { ButtonLink } from "@/components/Button/Button";
-import { Faq } from "@/components/Faq/Faq";
-import { ArrowUpIcon } from "@/components/icons/Icons";
-import type { FaqDictionary } from "@/lib/i18n/types";
+import { Faq, type FaqItem } from "@/components/Faq/Faq";
 import { routes } from "@/lib/routes";
+import type { LandingNamespace } from "./Hero";
 import styles from "./landing.module.css";
 
 interface FaqSectionProps {
-  dictionary: FaqDictionary;
+  namespace: LandingNamespace;
 }
 
-export function FaqSection({ dictionary }: FaqSectionProps): JSX.Element {
+export function FaqSection({ namespace }: FaqSectionProps): JSX.Element {
+  const t = useTranslations(namespace);
+  const items: FaqItem[] = useMessages()[namespace].faq.items;
   return (
     <section className={styles.faq}>
       <div className={styles.faqInner}>
         <div>
-          <h2 className={styles.sectionTitle}>{dictionary.title}</h2>
-          <p className={styles.faqText}>{dictionary.text}</p>
+          <h2 className={styles.sectionTitle}>{t("faq.title")}</h2>
+          <p className={styles.faqText}>{t("faq.text")}</p>
           <ButtonLink href={routes.form} variant="primary" size="md" className={styles.faqCtaDesktop}>
-            {dictionary.cta}
-            <ArrowUpIcon size={18} />
+            {t("faq.cta")}
+            <ArrowUp size={18} strokeWidth={2.2} />
           </ButtonLink>
         </div>
         <div>
-          <Faq items={dictionary.items} />
+          <Faq items={items} />
           <ButtonLink href={routes.form} variant="primary" size="md" className={`${styles.blockCta} ${styles.faqCtaMobile}`}>
-            {dictionary.cta}
-            <ArrowUpIcon size={18} />
+            {t("faq.cta")}
+            <ArrowUp size={18} strokeWidth={2.2} />
           </ButtonLink>
         </div>
       </div>

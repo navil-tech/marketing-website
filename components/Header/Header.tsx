@@ -1,21 +1,17 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { ChevronRight, Menu, X } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState, type JSX } from "react";
 import { ButtonLink } from "@/components/Button/Button";
+import { LogoMark } from "@/components/icons/LogoMark";
 import { ThemeToggle } from "@/components/ThemeToggle/ThemeToggle";
-import { ChevronRightIcon, CloseIcon, LogoMark, MenuIcon } from "@/components/icons/Icons";
-import type { ActiveNav, HeaderDictionary, Locale, NavKey } from "@/lib/i18n/types";
-import { navOrder, navRoutes, routes } from "@/lib/routes";
+import { Link, usePathname } from "@/i18n/navigation";
+import { routing, type Locale } from "@/i18n/routing";
+import { navOrder, navRoutes, routes, type NavKey } from "@/lib/routes";
 import styles from "./Header.module.css";
 
-interface HeaderProps {
-  dictionary: HeaderDictionary;
-  locale: Locale;
-}
-
-const languageOrder: Locale[] = ["ru", "en", "he"];
+type ActiveNav = NavKey | "none";
 
 function resolveActiveNav(pathname: string): ActiveNav {
   if (pathname === routes.shippers) return "shippers";
@@ -24,7 +20,9 @@ function resolveActiveNav(pathname: string): ActiveNav {
   return "none";
 }
 
-export function Header({ dictionary, locale }: HeaderProps): JSX.Element {
+export function Header(): JSX.Element {
+  const t = useTranslations("header");
+  const locale: Locale = useLocale();
   const pathname: string = usePathname();
   const active: ActiveNav = resolveActiveNav(pathname);
   // the menu remembers the path it was opened on, so navigating anywhere closes it
@@ -50,7 +48,7 @@ export function Header({ dictionary, locale }: HeaderProps): JSX.Element {
           <span className={styles.logoMarkDesktop}>
             <LogoMark size={30} />
           </span>
-          {dictionary.brand}
+          {t("brand")}
         </Link>
 
         <nav className={styles.nav}>
@@ -60,50 +58,51 @@ export function Header({ dictionary, locale }: HeaderProps): JSX.Element {
               href={navRoutes[key]}
               className={`${styles.navLink} ${active === key ? styles.navLinkActive : ""}`}
             >
-              {dictionary.nav[key]}
+              {t(`nav.${key}`)}
             </Link>
           ))}
         </nav>
 
         <div className={styles.actions}>
           <div className={styles.langs}>
-            {languageOrder.map((lang: Locale) => (
-              <a
+            {routing.locales.map((lang: Locale) => (
+              <Link
                 key={lang}
-                href={routes.placeholder}
-                lang={lang === "he" ? "he" : undefined}
+                href={pathname}
+                locale={lang}
+                lang={lang}
                 className={`${styles.lang} ${lang === locale ? styles.langActive : ""}`}
               >
-                {dictionary.languages[lang]}
-              </a>
+                {t(`languages.${lang}`)}
+              </Link>
             ))}
           </div>
-          <ThemeToggle label={dictionary.themeToggle} iconSize={18} bordered={true} />
+          <ThemeToggle label={t("themeToggle")} iconSize={18} bordered={true} />
           <ButtonLink href={routes.carriers} variant="secondary" size="sm" className="">
-            {dictionary.carrierCta}
+            {t("carrierCta")}
           </ButtonLink>
           <ButtonLink href={routes.shippers} variant="primary" size="sm" className="">
-            {dictionary.shipperCta}
+            {t("shipperCta")}
           </ButtonLink>
         </div>
 
         <span className={styles.themeToggle}>
-          <ThemeToggle label={dictionary.themeToggle} iconSize={20} bordered={false} />
+          <ThemeToggle label={t("themeToggle")} iconSize={20} bordered={false} />
         </span>
         <button
           type="button"
-          aria-label={isOpen ? dictionary.closeMenu : dictionary.openMenu}
+          aria-label={isOpen ? t("closeMenu") : t("openMenu")}
           aria-expanded={isOpen}
           aria-controls="m-menu"
           onClick={() => setOpenedOnPath(isOpen ? null : pathname)}
           className={`${styles.menuButton} ${isOpen ? styles.menuButtonOpen : ""}`}
         >
-          {isOpen ? <CloseIcon size={22} /> : <MenuIcon size={22} />}
+          {isOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       {isOpen && (
-        <nav id="m-menu" aria-label={dictionary.menuLabel} className={styles.menu}>
+        <nav id="m-menu" aria-label={t("menuLabel")} className={styles.menu}>
           {navOrder.map((key: NavKey) => (
             <Link
               key={key}
@@ -113,35 +112,36 @@ export function Header({ dictionary, locale }: HeaderProps): JSX.Element {
             >
               <span className={styles.menuLinkLabel}>
                 <span className={styles.menuDot} />
-                {dictionary.nav[key]}
+                {t(`nav.${key}`)}
               </span>
               <span className={styles.menuChevron}>
-                <ChevronRightIcon size={18} />
+                <ChevronRight size={18} />
               </span>
             </Link>
           ))}
 
-          <div className={styles.langLabel}>{dictionary.language}</div>
-          <div role="group" aria-label={dictionary.languageGroup} className={styles.langGroup}>
-            {languageOrder.map((lang: Locale) => (
-              <a
+          <div className={styles.langLabel}>{t("language")}</div>
+          <div role="group" aria-label={t("languageGroup")} className={styles.langGroup}>
+            {routing.locales.map((lang: Locale) => (
+              <Link
                 key={lang}
-                href={routes.placeholder}
-                lang={lang === "he" ? "he" : undefined}
+                href={pathname}
+                locale={lang}
+                lang={lang}
                 aria-current={lang === locale ? "true" : undefined}
                 className={`${styles.langChip} ${lang === locale ? styles.langChipActive : ""}`}
               >
-                {dictionary.languagesLong[lang]}
-              </a>
+                {t(`languagesLong.${lang}`)}
+              </Link>
             ))}
           </div>
 
           <div className={styles.menuButtons}>
             <ButtonLink href={routes.shippers} variant="primary" size="md" className={styles.menuCta}>
-              {dictionary.shipperCta}
+              {t("shipperCta")}
             </ButtonLink>
             <ButtonLink href={routes.carriers} variant="secondary" size="md" className={styles.menuCtaSecondary}>
-              {dictionary.carrierCta}
+              {t("carrierCta")}
             </ButtonLink>
           </div>
         </nav>

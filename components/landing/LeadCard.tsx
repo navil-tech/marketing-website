@@ -1,27 +1,29 @@
+import { ArrowUp } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { JSX, ReactNode } from "react";
 import { ButtonLink } from "@/components/Button/Button";
-import { ArrowUpIcon } from "@/components/icons/Icons";
-import type { LeadCardDictionary } from "@/lib/i18n/types";
 import { routes } from "@/lib/routes";
+import type { LandingNamespace } from "./Hero";
 import styles from "./landing.module.css";
 
 interface LeadCardProps {
-  dictionary: LeadCardDictionary;
+  namespace: LandingNamespace;
   className: string;
   form: ReactNode;
 }
 
-export function LeadCard({ dictionary, className, form }: LeadCardProps): JSX.Element {
+export function LeadCard({ namespace, className, form }: LeadCardProps): JSX.Element {
+  const t = useTranslations(namespace);
   return (
     <section className={`${styles.leadCardSection} ${className}`}>
       <div className={styles.leadCard}>
         <div>
-          <div className={styles.leadCardEyebrow}>{dictionary.eyebrow}</div>
-          <h2 className={styles.leadCardTitle}>{dictionary.title}</h2>
-          <p className={styles.leadCardText}>{dictionary.text}</p>
+          <div className={styles.leadCardEyebrow}>{t("leadCard.eyebrow")}</div>
+          <h2 className={styles.leadCardTitle}>{t("leadCard.title")}</h2>
+          <p className={styles.leadCardText}>{t("leadCard.text")}</p>
           <ButtonLink href={routes.form} variant="primary" size="md" className={styles.leadCardCta}>
-            {dictionary.mobileCta}
-            <ArrowUpIcon size={18} />
+            {t("leadCard.mobileCta")}
+            <ArrowUp size={18} strokeWidth={2.2} />
           </ButtonLink>
         </div>
         <div className={styles.leadCardForm}>{form}</div>

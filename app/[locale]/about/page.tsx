@@ -1,30 +1,36 @@
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { useMessages, useTranslations, type Messages } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import type { JSX } from "react";
-import { ArrowRightIcon } from "@/components/icons/Icons";
-import { currentLocale, getDictionary } from "@/lib/i18n";
-import type { AboutFact, Dictionary } from "@/lib/i18n/types";
+import { Link } from "@/i18n/navigation";
 import { routes } from "@/lib/routes";
 import styles from "./page.module.css";
 
-const dictionary: Dictionary = getDictionary(currentLocale);
+interface AboutFact {
+  title: string;
+  text: string;
+  mobileText: string;
+}
 
-export const metadata: Metadata = {
-  title: dictionary.about.metaTitle,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("about");
+  return { title: t("metaTitle") };
+}
 
 export default function AboutPage(): JSX.Element {
-  const page = dictionary.about;
+  const t = useTranslations("about");
+  const page: Messages["about"] = useMessages().about;
   return (
     <>
       <section className={styles.intro}>
         <div className={styles.inner}>
           <div>
-            <div className={styles.eyebrow}>{page.eyebrow}</div>
-            <h1 className={styles.title}>{page.title}</h1>
+            <div className={styles.eyebrow}>{t("eyebrow")}</div>
+            <h1 className={styles.title}>{t("title")}</h1>
           </div>
           <div className={styles.text}>
-            <p className={styles.lead}>{page.lead}</p>
+            <p className={styles.lead}>{t("lead")}</p>
             {page.paragraphs.map((paragraph: string) => (
               <p key={paragraph} className={styles.paragraph}>
                 {paragraph}
@@ -36,7 +42,7 @@ export default function AboutPage(): JSX.Element {
 
       <section className={styles.israel}>
         <div className={`${styles.inner} ${styles.israelInner}`}>
-          <h2 className={styles.israelTitle}>{page.israel.title}</h2>
+          <h2 className={styles.israelTitle}>{t("israel.title")}</h2>
           {page.israel.facts.map((fact: AboutFact) => (
             <div key={fact.title}>
               <h3 className={styles.factTitle}>{fact.title}</h3>
@@ -51,15 +57,15 @@ export default function AboutPage(): JSX.Element {
         <div className={`${styles.inner} ${styles.cardsInner}`}>
           <Link href={routes.shippers} className={`${styles.card} ${styles.cardShipper}`}>
             <span>
-              <span className={styles.cardEyebrow}>{page.shipperCard.eyebrow}</span>
-              <span className={styles.cardTitle}>{page.shipperCard.title}</span>
+              <span className={styles.cardEyebrow}>{t("shipperCard.eyebrow")}</span>
+              <span className={styles.cardTitle}>{t("shipperCard.title")}</span>
             </span>
             <CardArrow />
           </Link>
           <Link href={routes.carriers} className={`${styles.card} ${styles.cardCarrier}`}>
             <span>
-              <span className={styles.cardEyebrow}>{page.carrierCard.eyebrow}</span>
-              <span className={styles.cardTitle}>{page.carrierCard.title}</span>
+              <span className={styles.cardEyebrow}>{t("carrierCard.eyebrow")}</span>
+              <span className={styles.cardTitle}>{t("carrierCard.title")}</span>
             </span>
             <CardArrow />
           </Link>
@@ -73,10 +79,10 @@ function CardArrow(): JSX.Element {
   return (
     <span className={styles.cardArrow}>
       <span className={styles.arrowMobile}>
-        <ArrowRightIcon size={24} />
+        <ArrowRight size={24} />
       </span>
       <span className={styles.arrowDesktop}>
-        <ArrowRightIcon size={28} />
+        <ArrowRight size={28} />
       </span>
     </span>
   );

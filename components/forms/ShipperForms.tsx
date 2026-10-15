@@ -1,57 +1,54 @@
 "use client";
 
-import type { JSX } from "react";
+import { useLocale, useMessages, useTranslations } from "next-intl";
+import type { JSX, ReactNode } from "react";
 import { submitShipperLead } from "@/app/actions";
-import type { FieldsDictionary, LeadCardDictionary, LeadFormDictionary } from "@/lib/i18n/types";
-import { Consent } from "./Consent";
+import { Consent, ConsentLink } from "./Consent";
 import { SelectField, TextField } from "./Field";
 import styles from "./LeadForms.module.css";
 
-interface ShipperCardFormProps {
-  fields: FieldsDictionary;
-  form: LeadFormDictionary;
-}
-
-interface ShipperWideFormProps {
-  fields: FieldsDictionary;
-  form: LeadFormDictionary;
-  card: LeadCardDictionary;
-}
-
-export function ShipperCardForm({ fields, form }: ShipperCardFormProps): JSX.Element {
+export function ShipperCardForm(): JSX.Element {
+  const fields = useTranslations("fields");
+  const t = useTranslations("shippers");
+  const regions: string[] = useMessages().shippers.form.regions;
+  const action = submitShipperLead.bind(null, useLocale());
   return (
-    <form id="form" action={submitShipperLead} className={styles.card}>
-      <h2 className={styles.cardTitle}>{form.title}</h2>
-      <p className={styles.cardSubtitle}>{form.subtitle}</p>
+    <form id="form" action={action} className={styles.card}>
+      <h2 className={styles.cardTitle}>{t("form.title")}</h2>
+      <p className={styles.cardSubtitle}>{t("form.subtitle")}</p>
       <div className={styles.row}>
-        <TextField id="s-name" name="name" label={fields.name} hint="" type="text" autoComplete="name" placeholder="" required={true} />
+        <TextField id="s-name" name="name" label={fields("name")} hint="" type="text" autoComplete="name" placeholder="" required={true} />
       </div>
       <div className={styles.row}>
-        <TextField id="s-email" name="email" label={fields.email} hint="" type="email" autoComplete="email" placeholder={fields.emailPlaceholder} required={true} />
+        <TextField id="s-email" name="email" label={fields("email")} hint="" type="email" autoComplete="email" placeholder={fields("emailPlaceholder")} required={true} />
       </div>
       <div className={styles.pair}>
-        <TextField id="s-phone" name="phone" label={fields.phone} hint={fields.phoneHint} type="tel" autoComplete="tel" placeholder={fields.phonePlaceholder} required={false} />
-        <SelectField id="s-region" name="region" label={fields.region} placeholder={fields.regionPlaceholder} options={form.regions} required={true} />
+        <TextField id="s-phone" name="phone" label={fields("phone")} hint={fields("phoneHint")} type="tel" autoComplete="tel" placeholder={fields("phonePlaceholder")} required={false} />
+        <SelectField id="s-region" name="region" label={fields("region")} placeholder={fields("regionPlaceholder")} options={regions} required={true} />
       </div>
       <button type="submit" className={styles.submit}>
-        {form.submit}
+        {t("form.submit")}
       </button>
-      <Consent text={form.consent} className={styles.cardConsent} />
+      <Consent className={styles.cardConsent} text={t.rich("form.consent", { link: (chunks: ReactNode) => <ConsentLink>{chunks}</ConsentLink> })} />
     </form>
   );
 }
 
-export function ShipperWideForm({ fields, form, card }: ShipperWideFormProps): JSX.Element {
+export function ShipperWideForm(): JSX.Element {
+  const fields = useTranslations("fields");
+  const t = useTranslations("shippers");
+  const regions: string[] = useMessages().shippers.form.regions;
+  const action = submitShipperLead.bind(null, useLocale());
   return (
-    <form action={submitShipperLead} className={styles.wide}>
-      <TextField id="m-s-name" name="name" label={fields.name} hint="" type="text" autoComplete="name" placeholder="" required={true} />
-      <TextField id="m-s-email" name="email" label={fields.email} hint="" type="email" autoComplete="email" placeholder={fields.emailPlaceholder} required={true} />
-      <TextField id="m-s-phone" name="phone" label={fields.phone} hint={fields.phoneHint} type="tel" autoComplete="tel" placeholder={fields.phonePlaceholder} required={false} />
-      <SelectField id="m-s-region" name="region" label={fields.region} placeholder={fields.regionPlaceholder} options={form.regions} required={true} />
+    <form action={action} className={styles.wide}>
+      <TextField id="m-s-name" name="name" label={fields("name")} hint="" type="text" autoComplete="name" placeholder="" required={true} />
+      <TextField id="m-s-email" name="email" label={fields("email")} hint="" type="email" autoComplete="email" placeholder={fields("emailPlaceholder")} required={true} />
+      <TextField id="m-s-phone" name="phone" label={fields("phone")} hint={fields("phoneHint")} type="tel" autoComplete="tel" placeholder={fields("phonePlaceholder")} required={false} />
+      <SelectField id="m-s-region" name="region" label={fields("region")} placeholder={fields("regionPlaceholder")} options={regions} required={true} />
       <button type="submit" className={`${styles.submit} ${styles.wideSubmit}`}>
-        {card.submit}
+        {t("leadCard.submit")}
       </button>
-      <Consent text={card.consent} className={styles.wideConsent} />
+      <Consent className={styles.wideConsent} text={t.rich("leadCard.consent", { link: (chunks: ReactNode) => <ConsentLink>{chunks}</ConsentLink> })} />
     </form>
   );
 }

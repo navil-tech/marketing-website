@@ -1,5 +1,3 @@
-import type { NavKey } from "./i18n/types";
-
 export const routes = {
   home: "/",
   shippers: "/",
@@ -10,7 +8,9 @@ export const routes = {
   placeholder: "#",
 } as const;
 
-export const navOrder: NavKey[] = ["shippers", "carriers", "about"];
+export const navOrder = ["shippers", "carriers", "about"] as const;
+
+export type NavKey = (typeof navOrder)[number];
 
 export const navRoutes: Record<NavKey, string> = {
   shippers: routes.shippers,

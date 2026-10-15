@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { JSX, ReactNode } from "react";
+import { Link } from "@/i18n/navigation";
 import styles from "./Button.module.css";
 
 export type ButtonVariant = "primary" | "secondary" | "onAccent";
