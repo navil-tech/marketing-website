@@ -14,7 +14,6 @@ interface ThemeToggleProps {
 export function ThemeToggle({ label, iconSize, bordered }: ThemeToggleProps): JSX.Element {
   const { resolvedTheme, setTheme } = useTheme();
 
-  // both icons are always rendered and css picks one by `data-theme`, so the markup is hydration-safe
   return (
     <button
       type="button"

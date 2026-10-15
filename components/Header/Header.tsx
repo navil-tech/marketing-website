@@ -25,7 +25,6 @@ export function Header(): JSX.Element {
   const locale: Locale = useLocale();
   const pathname: string = usePathname();
   const active: ActiveNav = resolveActiveNav(pathname);
-  // the menu remembers the path it was opened on, so navigating anywhere closes it
   const [openedOnPath, setOpenedOnPath] = useState<string | null>(null);
   const isOpen: boolean = openedOnPath === pathname;
 
