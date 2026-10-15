@@ -1,9 +1,13 @@
 "use client";
 
+import { Plus } from "lucide-react";
 import { useState, type JSX } from "react";
-import { PlusIcon } from "@/components/icons/Icons";
-import type { FaqItem } from "@/lib/i18n/types";
 import styles from "./Faq.module.css";
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
 
 interface FaqProps {
   items: FaqItem[];
@@ -28,7 +32,7 @@ export function Faq({ items }: FaqProps): JSX.Element {
             >
               <span>{item.question}</span>
               <span className={`${styles.plus} ${isOpen ? styles.plusOpen : ""}`}>
-                <PlusIcon size={20} />
+                <Plus size={20} />
               </span>
             </button>
             {isOpen && <p className={styles.answer}>{item.answer}</p>}
