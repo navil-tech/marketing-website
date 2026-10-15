@@ -1,8 +1,8 @@
 "use client";
 
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import type { JSX } from "react";
-import { MoonIcon, SunIcon } from "@/components/icons/Icons";
-import { readTheme, writeTheme, type Theme } from "@/lib/theme";
 import styles from "./ThemeToggle.module.css";
 
 interface ThemeToggleProps {
@@ -12,23 +12,21 @@ interface ThemeToggleProps {
 }
 
 export function ThemeToggle({ label, iconSize, bordered }: ThemeToggleProps): JSX.Element {
-  const handleClick = (): void => {
-    const next: Theme = readTheme() === "dark" ? "light" : "dark";
-    writeTheme(next);
-  };
+  const { resolvedTheme, setTheme } = useTheme();
 
+  // both icons are always rendered and css picks one by `data-theme`, so the markup is hydration-safe
   return (
     <button
       type="button"
       aria-label={label}
-      onClick={handleClick}
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       className={`${styles.toggle} ${bordered ? styles.bordered : ""}`}
     >
       <span className={styles.sun}>
-        <SunIcon size={iconSize} />
+        <Sun size={iconSize} />
       </span>
       <span className={styles.moon}>
-        <MoonIcon size={iconSize} />
+        <Moon size={iconSize} />
       </span>
     </button>
   );
