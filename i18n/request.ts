@@ -2,6 +2,7 @@ import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
 import { notFound } from "next/navigation";
 import * as rootParams from "next/root-params";
+import { formats } from "./formats";
 import { routing } from "./routing";
 
 export default getRequestConfig(async ({ locale }) => {
@@ -11,6 +12,8 @@ export default getRequestConfig(async ({ locale }) => {
   }
   return {
     locale: resolved,
+    timeZone: "Asia/Jerusalem",
+    formats,
     messages: (await import(`../messages/${resolved}.json`)).default,
   };
 });

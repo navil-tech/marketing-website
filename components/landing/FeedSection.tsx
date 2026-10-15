@@ -1,18 +1,30 @@
 "use client";
 
 import { ArrowUp, Star } from "lucide-react";
-import { useMessages, useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import type { JSX } from "react";
 import { ButtonLink } from "@/components/Button/Button";
 import { routes } from "@/lib/routes";
 import styles from "./FeedSection.module.css";
 import { useTick } from "./useTick";
 
+type OrderKey = "sofa" | "office" | "fridge" | "move" | "boxes" | "washer";
+
 interface Order {
-  route: string;
-  what: string;
-  when: string;
+  key: OrderKey;
+  at: Date;
 }
+
+// fictional demo data; texts come from messages, dates are formatted per locale
+const demoOrders: Order[] = [
+  { key: "sofa", at: new Date("2026-10-15T09:00:00+03:00") },
+  { key: "office", at: new Date("2026-10-16T14:00:00+03:00") },
+  { key: "fridge", at: new Date("2026-10-14T18:00:00+03:00") },
+  { key: "move", at: new Date("2026-10-18T10:00:00+03:00") },
+  { key: "boxes", at: new Date("2026-10-14T20:00:00+03:00") },
+  { key: "washer", at: new Date("2026-10-15T12:00:00+03:00") },
+];
+const pilotPriceIls: number = 0;
 
 const tickIntervalMs: number = 1800;
 const visibleOrders: number = 4;
@@ -25,9 +37,9 @@ function rotateOrders(orders: Order[], tick: number): Order[] {
 
 export function FeedSection(): JSX.Element {
   const t = useTranslations("carriers");
-  const allOrders: Order[] = useMessages().carriers.feed.orders;
+  const format = useFormatter();
   const tick: number = useTick(tickIntervalMs);
-  const orders: Order[] = rotateOrders(allOrders, tick);
+  const orders: Order[] = rotateOrders(demoOrders, tick);
   const dotDim: boolean = tick % 2 === 1;
 
   return (
@@ -46,17 +58,17 @@ export function FeedSection(): JSX.Element {
             </div>
             <div className={styles.orders}>
               {orders.map((order: Order, index: number) => (
-                <div key={order.route} className={`${styles.order} ${index === 0 ? styles.orderFirst : ""}`}>
+                <div key={order.key} className={`${styles.order} ${index === 0 ? styles.orderFirst : ""}`}>
                   <div className={styles.orderHead}>
-                    <span className={styles.orderRoute}>{order.route}</span>
+                    <span className={styles.orderRoute}>{t(`feed.orders.${order.key}.route`)}</span>
                     <span className={`${styles.badge} ${index === 0 ? styles.badgeVisible : ""}`}>
                       <span className={styles.badgeLong}>{t("feed.badge")}</span>
                       <span className={styles.badgeShort}>{t("feed.badgeShort")}</span>
                     </span>
                   </div>
                   <div className={styles.orderMeta}>
-                    <span>{order.what}</span>
-                    <span className={styles.orderWhen}>{order.when}</span>
+                    <span>{t(`feed.orders.${order.key}.what`)}</span>
+                    <span className={styles.orderWhen}>{format.dateTime(order.at, "weekdayTime")}</span>
                   </div>
                 </div>
               ))}
@@ -67,7 +79,7 @@ export function FeedSection(): JSX.Element {
         <div>
           <h2 className={styles.title}>{t("price.title")}</h2>
           <div className={styles.priceRow}>
-            <span className={styles.amount}>{t("price.amount")}</span>
+            <span className={styles.amount}>{format.number(pilotPriceIls, "ils")}</span>
             <span className={styles.now}>{t("price.now")}</span>
           </div>
           <p className={styles.free}>{t("price.free")}</p>
