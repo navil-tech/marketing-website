@@ -7,6 +7,7 @@ import type { JSX } from "react";
 import { Footer } from "@/components/Footer/Footer";
 import { Header } from "@/components/Header/Header";
 import { localeDirections, routing, type Locale } from "@/i18n/routing";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const rubik = Rubik({
@@ -17,6 +18,7 @@ const rubik = Rubik({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Novil",
 };
 

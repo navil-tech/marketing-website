@@ -1,10 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { useMessages, useTranslations, type Messages } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import type { JSX } from "react";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
 import { routes } from "@/lib/routes";
+import { buildPageMetadata } from "@/lib/site";
 import styles from "./page.module.css";
 
 interface AboutFact {
@@ -14,8 +16,9 @@ interface AboutFact {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale: Locale = await getLocale();
   const t = await getTranslations("about");
-  return { title: t("metaTitle") };
+  return { title: t("metaTitle"), ...buildPageMetadata(locale, routes.about) };
 }
 
 export default function AboutPage(): JSX.Element {
