@@ -9,7 +9,7 @@ import styles from "./page.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("thanks");
-  return { title: t("metaTitle") };
+  return { title: t("metaTitle"), robots: { index: false } };
 }
 
 export default function ThanksPage(): JSX.Element {
