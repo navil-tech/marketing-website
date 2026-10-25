@@ -9,6 +9,7 @@ const withNextIntl = createNextIntlPlugin({
 });
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   agentRules: false,
   cacheComponents: true,
   partialPrefetching: true,
