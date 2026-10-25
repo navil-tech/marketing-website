@@ -5,6 +5,7 @@ import type { JSX, ReactNode } from "react";
 import { submitCarrierApplication } from "@/app/actions";
 import { Consent, ConsentLink } from "./Consent";
 import { SelectField, TextField } from "./Field";
+import { Honeypot } from "./Honeypot";
 import styles from "./LeadForms.module.css";
 
 export function CarrierCardForm(): JSX.Element {
@@ -14,6 +15,7 @@ export function CarrierCardForm(): JSX.Element {
   const action = submitCarrierApplication.bind(null, useLocale());
   return (
     <form id="form" action={action} className={styles.card}>
+      <Honeypot />
       <h2 className={styles.cardTitle}>{t("form.title")}</h2>
       <p className={styles.cardSubtitle}>{t("form.subtitle")}</p>
       <div className={styles.row}>
@@ -91,6 +93,7 @@ export function CarrierWideForm(): JSX.Element {
   const action = submitCarrierApplication.bind(null, useLocale());
   return (
     <form action={action} className={styles.wide}>
+      <Honeypot />
       <TextField
         id="m-c-name"
         name="name"

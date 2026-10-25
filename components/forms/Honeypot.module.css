@@ -1,0 +1,7 @@
+.honeypot {
+  position: absolute;
+  inset-inline-start: -10000px;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+}

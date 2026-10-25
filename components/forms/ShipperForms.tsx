@@ -5,6 +5,7 @@ import type { JSX, ReactNode } from "react";
 import { submitShipperLead } from "@/app/actions";
 import { Consent, ConsentLink } from "./Consent";
 import { SelectField, TextField } from "./Field";
+import { Honeypot } from "./Honeypot";
 import styles from "./LeadForms.module.css";
 
 export function ShipperCardForm(): JSX.Element {
@@ -14,6 +15,7 @@ export function ShipperCardForm(): JSX.Element {
   const action = submitShipperLead.bind(null, useLocale());
   return (
     <form id="form" action={action} className={styles.card}>
+      <Honeypot />
       <h2 className={styles.cardTitle}>{t("form.title")}</h2>
       <p className={styles.cardSubtitle}>{t("form.subtitle")}</p>
       <div className={styles.row}>
@@ -79,6 +81,7 @@ export function ShipperWideForm(): JSX.Element {
   const action = submitShipperLead.bind(null, useLocale());
   return (
     <form action={action} className={styles.wide}>
+      <Honeypot />
       <TextField
         id="m-s-name"
         name="name"
