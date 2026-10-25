@@ -23,7 +23,6 @@ interface Offer {
   reviews: number;
 }
 
-// fictional demo data; names come from messages, numbers are formatted per locale
 const demoOffers: Offer[] = [
   { key: "van", priceIls: 450, rating: 4.9, reviews: 38 },
   { key: "truck", priceIls: 520, rating: 4.8, reviews: 21 },

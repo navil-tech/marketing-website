@@ -12,7 +12,6 @@
   border: 1px solid var(--line);
 }
 
-/* flex wrappers remove the inline baseline gap under the svg, keeping the icon centered */
 .moon {
   display: flex;
 }

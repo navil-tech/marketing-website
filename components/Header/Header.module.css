@@ -23,7 +23,6 @@
   letter-spacing: -0.02em;
 }
 
-/* flex wrappers remove the inline baseline gap under the svg, keeping the mark centered on the text */
 .logoMarkMobile {
   display: flex;
 }

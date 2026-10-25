@@ -1,5 +1,3 @@
-/* shared layout for the shippers and carriers landing pages */
-
 .page {
   line-height: 1.55;
 }
@@ -257,7 +255,6 @@
   }
 }
 
-/* carriers: the lead card follows the accent block, which already carries the spacing */
 .leadCardSectionTight {
   padding-top: 0;
 }

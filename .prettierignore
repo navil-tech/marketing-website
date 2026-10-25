@@ -1,3 +1,2 @@
-# generated and tool-owned files; prettier also honours .gitignore
 package-lock.json
 messages/*.d.json.ts

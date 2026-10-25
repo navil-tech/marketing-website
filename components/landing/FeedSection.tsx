@@ -15,7 +15,6 @@ interface Order {
   at: Date;
 }
 
-// fictional demo data; texts come from messages, dates are formatted per locale
 const demoOrders: Order[] = [
   { key: "sofa", at: new Date("2026-10-15T09:00:00+03:00") },
   { key: "office", at: new Date("2026-10-16T14:00:00+03:00") },

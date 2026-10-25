@@ -1,6 +1,5 @@
 import type { DateTimeFormatOptions, NumberFormatOptions } from "next-intl";
 
-/** named formats shared by all locales; referenced by name in `useFormatter` calls */
 export const formats = {
   dateTime: {
     weekdayTime: { weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" },
