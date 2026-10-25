@@ -42,3 +42,5 @@ yarn-error.log*
 next-env.d.ts
 
 messages/*.d.json.ts
+
+/lib/generated/
