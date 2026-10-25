@@ -5,14 +5,14 @@ Next.js 16 site in three locales (ru, en, he). Lead forms are stored in PostgreS
 ## Local setup
 
 ```bash
-cp .env .env
+cp .env.example .env
 npm install                                   # postinstall generates the prisma client
 docker compose -f docker-compose.dev.yml up -d
 npm run db:deploy                             # applies prisma/migrations
 npm run dev
 ```
 
-Environment variables are listed in `.env`: `DATABASE_URL` for the app and `POSTGRES_*` for the dev database, which listens on `127.0.0.1:$POSTGRES_PORT`. Keep `DATABASE_URL` in sync with the `POSTGRES_*` values.
+Environment variables are listed in `.env.example`: `DATABASE_URL` for the app and `POSTGRES_*` for the dev database, which listens on `127.0.0.1:$POSTGRES_PORT`. Keep `DATABASE_URL` in sync with the `POSTGRES_*` values.
 
 ## Database
 
