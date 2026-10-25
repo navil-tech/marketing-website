@@ -1,6 +1,18 @@
 .consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   font-size: 13px;
   color: var(--ink3);
+  cursor: pointer;
+}
+
+.checkbox {
+  flex: none;
+  inline-size: 18px;
+  block-size: 18px;
+  margin-block-start: 1px;
+  accent-color: var(--accent);
 }
 
 .link {

@@ -76,6 +76,7 @@ export function CarrierCardForm(): JSX.Element {
         {t("form.submit")}
       </button>
       <Consent
+        id="c-consent"
         className={styles.cardConsent}
         text={t.rich("form.consent", { link: (chunks: ReactNode) => <ConsentLink>{chunks}</ConsentLink> })}
       />
@@ -144,6 +145,7 @@ export function CarrierWideForm(): JSX.Element {
         {t("leadCard.submit")}
       </button>
       <Consent
+        id="m-c-consent"
         className={styles.wideConsent}
         text={t.rich("leadCard.consent", { link: (chunks: ReactNode) => <ConsentLink>{chunks}</ConsentLink> })}
       />

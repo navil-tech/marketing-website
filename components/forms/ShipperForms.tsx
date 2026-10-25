@@ -64,6 +64,7 @@ export function ShipperCardForm(): JSX.Element {
         {t("form.submit")}
       </button>
       <Consent
+        id="s-consent"
         className={styles.cardConsent}
         text={t.rich("form.consent", { link: (chunks: ReactNode) => <ConsentLink>{chunks}</ConsentLink> })}
       />
@@ -120,6 +121,7 @@ export function ShipperWideForm(): JSX.Element {
         {t("leadCard.submit")}
       </button>
       <Consent
+        id="m-s-consent"
         className={styles.wideConsent}
         text={t.rich("leadCard.consent", { link: (chunks: ReactNode) => <ConsentLink>{chunks}</ConsentLink> })}
       />
