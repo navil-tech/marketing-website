@@ -20,9 +20,8 @@ Schema: `prisma/schema.prisma`, one `Lead` row per submitted form. After changin
 
 ## Docker image
 
-`Dockerfile` builds two targets; the production compose file lives in the infrastructure repository.
+`Dockerfile` builds one image; the production compose file lives in the infrastructure repository.
 
-- `migrator`: runs `prisma migrate deploy`, start it before the app with the same `DATABASE_URL`;
-- `runner`: the site on port 3000, non-root, no dev dependencies.
+The container runs `prisma migrate deploy` and then `next start` on port 3000 as a non-root user, so every start applies pending migrations to `DATABASE_URL` before serving.
 
 The app expects a reverse proxy that terminates TLS and sets `X-Forwarded-For`: the attribution cookie is `secure` in production and the stored `ip` is the first entry of that header.
