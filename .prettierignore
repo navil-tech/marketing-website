@@ -1,3 +1,4 @@
 package-lock.json
 messages/*.d.json.ts
 lib/generated/
+CHANGELOG.md
