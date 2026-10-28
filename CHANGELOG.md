@@ -19,15 +19,6 @@
 
 * center svg icons in theme toggle and header logo ([9f87c30](https://github.com/navil-tech/marketing-website/commit/9f87c30a86de1f130b30f3aa143e21c44cd592a4))
 
-### Refactoring
-
-* drop inline comments ([7de4ffa](https://github.com/navil-tech/marketing-website/commit/7de4ffaec1d2e506f1405eed47fc288bf50b129d))
-* drop redundant inline comments ([f6e07c0](https://github.com/navil-tech/marketing-website/commit/f6e07c0f12cbfb57400d574b1168b72b3c2b1018))
-* format demo numbers and dates with next-intl formatter ([eac39af](https://github.com/navil-tech/marketing-website/commit/eac39affff1a13c60fdd84cf8a5afcca888819cd))
-* replace handwritten icons with lucide-react ([126f9b9](https://github.com/navil-tech/marketing-website/commit/126f9b9b04419b5bf44ae4a67cadfa328b64fc2a))
-* switch theme toggle to next-themes ([c8dd5cf](https://github.com/navil-tech/marketing-website/commit/c8dd5cfe54f039de1e8ffedc692010db077787f9))
-* validate lead forms with zod ([a1735bb](https://github.com/navil-tech/marketing-website/commit/a1735bbe7e53058be44f7a3a6ec15af007074c11))
-
 ### Build
 
 * add semantic-release with the conventional commits preset ([3ca395f](https://github.com/navil-tech/marketing-website/commit/3ca395f14152ce02ea8b0b401c70bb4c4edb4745))
