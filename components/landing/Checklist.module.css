@@ -1,0 +1,33 @@
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.icon {
+  flex-shrink: 0;
+  display: flex;
+  margin-top: 2px;
+  color: var(--accent-text);
+}
+
+@media (min-width: 1024px) {
+  .item {
+    gap: 14px;
+    padding: 16px 0;
+  }
+
+  .icon {
+    margin-top: 4px;
+  }
+}

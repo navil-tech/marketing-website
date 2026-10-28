@@ -1,0 +1,266 @@
+.page {
+  line-height: 1.55;
+}
+
+.eyebrow {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-text);
+  margin-bottom: 12px;
+}
+
+.hero {
+  padding: 28px 20px 40px;
+}
+
+.heroInner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: 36px;
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.heroLead {
+  margin-top: 16px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.heroCta {
+  margin-top: 24px;
+  width: 100%;
+  font-size: 17px;
+}
+
+.heroChecklist {
+  margin-top: 32px;
+}
+
+.heroNote {
+  margin-top: 20px;
+  font-size: 15px;
+  color: var(--ink2);
+}
+
+.heroFormSection {
+  padding: 0 20px 48px;
+}
+
+.sectionTitle {
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.blockCta {
+  margin-top: 28px;
+  width: 100%;
+}
+
+.leadCardSection {
+  padding: 48px 20px 0;
+}
+
+.leadCard {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border: 1.5px solid var(--accent);
+  border-radius: 20px;
+  padding: 24px 20px;
+  background: var(--surface);
+}
+
+.leadCardEyebrow {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-text);
+  margin-bottom: 8px;
+}
+
+.leadCardTitle {
+  font-size: 28px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.leadCardText {
+  margin-top: 10px;
+  font-size: 17px;
+  color: var(--ink2);
+}
+
+.leadCardCta {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.leadCardForm {
+  display: none;
+}
+
+.faq {
+  padding: 56px 20px;
+}
+
+.faqInner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.faqText {
+  margin: 10px 0 20px;
+  color: var(--ink2);
+}
+
+.faqCtaDesktop {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .page {
+    line-height: 1.6;
+  }
+
+  .eyebrow {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .hero {
+    padding: 72px 20px 96px;
+  }
+
+  .heroInner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 500px;
+    gap: 96px;
+    align-items: start;
+  }
+
+  .heroInnerWide {
+    grid-template-columns: minmax(0, 1fr) 520px;
+    gap: 80px;
+  }
+
+  .heroCopy {
+    padding-top: 16px;
+  }
+
+  .heroTitle {
+    font-size: 64px;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+
+  .heroLead {
+    margin-top: 24px;
+    font-size: 21px;
+    max-width: 540px;
+  }
+
+  .heroCta {
+    display: none;
+  }
+
+  .heroChecklist {
+    margin-top: 40px;
+    max-width: 560px;
+  }
+
+  .heroNote {
+    margin-top: 24px;
+    font-size: inherit;
+    max-width: 540px;
+  }
+
+  .heroFormSection {
+    padding: 0;
+  }
+
+  .sectionTitle {
+    font-size: 44px;
+    line-height: 1.1;
+  }
+
+  .blockCta {
+    margin-top: 36px;
+    width: auto;
+  }
+
+  .leadCardSection {
+    padding: 104px 20px 0;
+  }
+
+  .leadCard {
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 360px minmax(0, 1fr);
+    gap: 56px;
+    align-items: center;
+  }
+
+  .leadCardEyebrow {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .leadCardTitle {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  .leadCardText {
+    margin-top: 14px;
+    font-size: 18px;
+  }
+
+  .leadCardCta {
+    display: none;
+  }
+
+  .leadCardForm {
+    display: block;
+  }
+
+  .faq {
+    padding: 104px 20px;
+  }
+
+  .faqInner {
+    display: grid;
+    grid-template-columns: 380px minmax(0, 1fr);
+    gap: 96px;
+  }
+
+  .faqText {
+    margin: 14px 0 28px;
+  }
+
+  .faqCtaDesktop {
+    display: inline-flex;
+  }
+
+  .faqCtaMobile {
+    display: none;
+  }
+}
+
+.leadCardSectionTight {
+  padding-top: 0;
+}
+
+@media (min-width: 1024px) {
+  .leadCardSectionTight {
+    padding-top: 0;
+  }
+}

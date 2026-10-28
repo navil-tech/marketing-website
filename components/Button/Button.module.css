@@ -1,0 +1,37 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.md {
+  height: 52px;
+  padding: 0 26px;
+  font-weight: 600;
+}
+
+.sm {
+  height: 44px;
+  padding: 0 18px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.secondary {
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+}
+
+.onAccent {
+  background: var(--accent-ink);
+  color: var(--accent);
+}

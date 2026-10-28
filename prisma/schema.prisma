@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum LeadKind {
+  SHIPPER
+  CARRIER
+}
+
+model Lead {
+  id        String   @id @default(uuid(7))
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  kind   LeadKind
+  locale String   @db.VarChar(5)
+
+  name    String
+  email   String
+  phone   String?
+  region  String
+  vehicle String?
+
+  pageUrl   String?
+  userAgent String?
+  ip        String? @db.VarChar(45)
+
+  utmSource     String?
+  utmMedium     String?
+  utmCampaign   String?
+  utmTerm       String?
+  utmContent    String?
+  gclid         String?
+  fbclid        String?
+  landingPath   String?
+  firstReferrer String?
+  firstVisitAt  DateTime? @db.Timestamptz(3)
+
+  consentGiven   Boolean
+  consentVersion String
+
+  isSpam Boolean
+
+  @@index([createdAt])
+  @@index([email])
+  @@index([kind, createdAt])
+}

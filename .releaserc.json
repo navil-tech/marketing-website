@@ -1,0 +1,59 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits",
+        "releaseRules": [
+          { "type": "perf", "release": "patch" },
+          { "type": "refactor", "release": "patch" },
+          { "type": "build", "release": "patch" },
+          { "type": "ci", "release": "patch" },
+          { "type": "docs", "release": "patch" },
+          { "type": "test", "release": "patch" },
+          { "type": "chore", "release": "patch" },
+          { "type": "style", "release": "patch" }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            { "type": "feat", "section": "Features" },
+            { "type": "fix", "section": "Bug Fixes" },
+            { "type": "perf", "section": "Performance" },
+            { "type": "refactor", "section": "Refactoring" },
+            { "type": "build", "section": "Build" },
+            { "type": "ci", "section": "CI" },
+            { "type": "docs", "hidden": true },
+            { "type": "test", "hidden": true },
+            { "type": "chore", "hidden": true },
+            { "type": "style", "hidden": true }
+          ]
+        },
+        "writerOpts": {
+          "mainTemplate": "{{> header}}\n{{#if noteGroups}}\n{{#each noteGroups}}\n\n### ⚠ {{title}}\n\n{{#each notes}}\n* {{#if commit.scope}}**{{commit.scope}}:** {{/if}}{{text}}\n{{/each}}\n{{/each}}\n{{/if}}\n{{#each commitGroups}}\n\n{{#if title}}\n### {{title}}\n\n{{/if}}\n{{#each commits}}\n{{> commit root=@root}}\n{{/each}}\n{{/each}}\n{{#unless commitGroups}}\n{{#unless noteGroups}}\n\nMaintenance release: internal changes without user-facing effect.\n{{/unless}}\n{{/unless}}\n{{> footer}}\n"
+        }
+      }
+    ],
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "docker build -t $ECR_REPOSITORY:${nextRelease.version} .",
+        "publishCmd": "docker push $ECR_REPOSITORY:${nextRelease.version}"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["CHANGELOG.md"],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ]
+  ]
+}

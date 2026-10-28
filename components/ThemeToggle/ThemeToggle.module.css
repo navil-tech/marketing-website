@@ -1,0 +1,29 @@
+.toggle {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--ink2);
+}
+
+.bordered {
+  border: 1px solid var(--line);
+}
+
+.moon {
+  display: flex;
+}
+
+.sun {
+  display: none;
+}
+
+:global([data-theme="dark"]) .sun {
+  display: flex;
+}
+
+:global([data-theme="dark"]) .moon {
+  display: none;
+}
