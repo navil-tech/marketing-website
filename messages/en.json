@@ -52,6 +52,17 @@
     "phonePlaceholder": "050-123-4567",
     "region": "Area *",
     "regionPlaceholder": "Select",
+    "regions": {
+      "TEL_AVIV": "Tel Aviv",
+      "RAMAT_GAN_GIVATAYIM": "Ramat Gan and Givatayim",
+      "BAT_YAM_HOLON": "Bat Yam and Holon",
+      "PETAH_TIKVA": "Petah Tikva",
+      "RISHON_LEZION": "Rishon LeZion",
+      "HERZLIYA_RAANANA": "Herzliya and Ra'anana",
+      "BNEI_BRAK": "Bnei Brak",
+      "WHOLE_COUNTRY": "Whole country",
+      "OTHER": "Other"
+    },
     "vehicle": "Vehicle type *",
     "vehiclePlaceholder": "E.g. 3-ton van with a tail lift"
   },
@@ -72,17 +83,7 @@
       "title": "Leave your details",
       "subtitle": "We'll write when we open access in your area. Takes half a minute.",
       "submit": "Leave your details",
-      "consent": "I agree to the <link>privacy policy</link> and to receive launch news. We send nothing else.",
-      "regions": [
-        "Tel Aviv",
-        "Ramat Gan and Givatayim",
-        "Bat Yam and Holon",
-        "Petah Tikva",
-        "Rishon LeZion",
-        "Herzliya and Ra'anana",
-        "Bnei Brak",
-        "Other"
-      ]
+      "consent": "I agree to the <link>privacy policy</link> and to receive launch news. We send nothing else."
     },
     "how": {
       "title": "How it will work",
@@ -172,18 +173,7 @@
       "title": "Carrier form",
       "subtitle": "Five questions so we know which jobs suit you.",
       "submit": "Fill in the form",
-      "consent": "I agree to the <link>privacy policy</link>. We'll check documents at onboarding, nothing to upload now.",
-      "regions": [
-        "Tel Aviv",
-        "Ramat Gan and Givatayim",
-        "Bat Yam and Holon",
-        "Petah Tikva",
-        "Rishon LeZion",
-        "Herzliya and Ra'anana",
-        "Bnei Brak",
-        "Whole country",
-        "Other"
-      ]
+      "consent": "I agree to the <link>privacy policy</link>. We'll check documents at onboarding, nothing to upload now."
     },
     "feed": {
       "title": "Clients find you",

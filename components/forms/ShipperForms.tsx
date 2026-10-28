@@ -1,17 +1,21 @@
 "use client";
 
-import { useLocale, useMessages, useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { JSX, ReactNode } from "react";
 import { submitShipperLead } from "@/app/actions";
 import { Consent, ConsentLink } from "./Consent";
-import { SelectField, TextField } from "./Field";
+import { SHIPPER_REGIONS } from "@/lib/regions";
+import { SelectField, type SelectOption, TextField } from "./Field";
 import { Honeypot } from "./Honeypot";
 import styles from "./LeadForms.module.css";
 
 export function ShipperCardForm(): JSX.Element {
   const fields = useTranslations("fields");
   const t = useTranslations("shippers");
-  const regions: string[] = useMessages().shippers.form.regions;
+  const regions: SelectOption[] = SHIPPER_REGIONS.map((region) => ({
+    value: region,
+    label: fields(`regions.${region}`),
+  }));
   const action = submitShipperLead.bind(null, useLocale());
   return (
     <form id="form" action={action} className={styles.card}>
@@ -77,7 +81,10 @@ export function ShipperCardForm(): JSX.Element {
 export function ShipperWideForm(): JSX.Element {
   const fields = useTranslations("fields");
   const t = useTranslations("shippers");
-  const regions: string[] = useMessages().shippers.form.regions;
+  const regions: SelectOption[] = SHIPPER_REGIONS.map((region) => ({
+    value: region,
+    label: fields(`regions.${region}`),
+  }));
   const action = submitShipperLead.bind(null, useLocale());
   return (
     <form action={action} className={styles.wide}>

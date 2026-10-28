@@ -12,6 +12,18 @@ enum LeadKind {
   CARRIER
 }
 
+enum Region {
+  TEL_AVIV
+  RAMAT_GAN_GIVATAYIM
+  BAT_YAM_HOLON
+  PETAH_TIKVA
+  RISHON_LEZION
+  HERZLIYA_RAANANA
+  BNEI_BRAK
+  WHOLE_COUNTRY
+  OTHER
+}
+
 model Lead {
   id        String   @id @default(uuid(7))
   createdAt DateTime @default(now()) @db.Timestamptz(3)
@@ -22,7 +34,7 @@ model Lead {
   name    String
   email   String
   phone   String?
-  region  String
+  region  Region
   vehicle String?
 
   pageUrl   String?

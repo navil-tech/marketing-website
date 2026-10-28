@@ -12,12 +12,17 @@ interface TextFieldProps {
   required: boolean;
 }
 
+export interface SelectOption {
+  value: string;
+  label: string;
+}
+
 interface SelectFieldProps {
   id: string;
   name: string;
   label: string;
   placeholder: string;
-  options: string[];
+  options: SelectOption[];
   required: boolean;
 }
 
@@ -58,9 +63,9 @@ export function SelectField({ id, name, label, placeholder, options, required }:
       </label>
       <select id={id} name={name} required={required} defaultValue="" className={styles.select}>
         <option value="">{placeholder}</option>
-        {options.map((option: string) => (
-          <option key={option} value={option}>
-            {option}
+        {options.map((option: SelectOption) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>
