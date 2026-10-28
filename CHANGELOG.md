@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/navil-tech/marketing-website/compare/v1.0.0...v1.0.1) (2026-10-28)
+
+### CI
+
+* hide refactor commits from the changelog ([4739373](https://github.com/navil-tech/marketing-website/commit/473937360d1328ea1da96a2062e23722a0ffe011))
+* publish a github release for every version ([380ffe4](https://github.com/navil-tech/marketing-website/commit/380ffe45e8c7c05b359cb089677ed0c87d377271))
+* run release jobs one at a time ([eba4caf](https://github.com/navil-tech/marketing-website/commit/eba4caf218c9d2577120672be51fe820013fbe0b))
+
 ## 1.0.0 (2026-10-28)
 
 ### Features
