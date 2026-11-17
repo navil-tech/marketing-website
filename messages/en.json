@@ -1,6 +1,6 @@
 {
   "header": {
-    "brand": "Novil",
+    "brand": "Navil",
     "nav": {
       "shippers": "Shippers",
       "carriers": "Carriers",
@@ -32,8 +32,8 @@
     "emailValue": "[address]",
     "phoneLabel": "Phone and WhatsApp",
     "phoneValue": "[number]",
-    "brand": "Novil",
-    "description": "Novil is a marketplace for finding freight carriers. Gush Dan, Israel.",
+    "brand": "Navil",
+    "description": "Navil is a marketplace for finding freight carriers. Gush Dan, Israel.",
     "serviceTitle": "Service",
     "documentsTitle": "Documents",
     "privacy": "Privacy policy",
@@ -41,7 +41,7 @@
     "contactTitle": "Get in touch",
     "whatsapp": "WhatsApp",
     "email": "Email",
-    "copyright": "© 2026 Novil"
+    "copyright": "© 2026 Navil"
   },
   "fields": {
     "name": "Name *",
@@ -67,7 +67,7 @@
     "vehiclePlaceholder": "E.g. 3-ton van with a tail lift"
   },
   "shippers": {
-    "metaTitle": "Novil — for shippers",
+    "metaTitle": "Navil — for shippers",
     "eyebrow": "For shippers",
     "title": "A truck without the ring-around",
     "lead": "Describe the job — carriers in your area respond on their own and name their price.",
@@ -157,7 +157,7 @@
     }
   },
   "carriers": {
-    "metaTitle": "Novil — for carriers",
+    "metaTitle": "Navil — for carriers",
     "eyebrow": "For carriers",
     "title": "Jobs come to you",
     "lead": "Less time looking for jobs — more time on the road. Clients from the whole area in one place.",
@@ -251,13 +251,13 @@
     }
   },
   "about": {
-    "metaTitle": "Novil — about us",
+    "metaTitle": "Navil — about us",
     "eyebrow": "About us",
     "title": "It started with our own move",
     "lead": "The idea came from our own move: half a day on the phone, three different prices for the same job, and in the end a deal with someone we knew nothing about.",
     "paragraphs": [
       "We looked at how this market works in Israel and saw that it's barely touched by digital. Thousands of carriers, hundreds of thousands of moves a year — and no shared place where you can see them. Everyone gets by on their own: some through groups, some through friends, some through middlemen who take a cut simply for having a phone book.",
-      "Novil is an attempt to bring this market into one place. We have no trucks of our own and we take no money for the move. Our job is for you to find each other and know who you're dealing with. We're at the very beginning, so we'll talk to the first participants personally."
+      "Navil is an attempt to bring this market into one place. We have no trucks of our own and we take no money for the move. Our job is for you to find each other and know who you're dealing with. We're at the very beginning, so we'll talk to the first participants personally."
     ],
     "israel": {
       "title": "We're in Israel",
@@ -284,7 +284,7 @@
     }
   },
   "thanks": {
-    "metaTitle": "Novil — thank you",
+    "metaTitle": "Navil — thank you",
     "title": "Thanks, you're on the list.",
     "text": "We'll be in touch in the next few days. If you want to ask something right now, write to us: <link>[contact]</link>",
     "home": "Back to home"

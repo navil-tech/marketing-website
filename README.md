@@ -1,4 +1,4 @@
-# Novil marketing website
+# Navil marketing website
 
 Next.js 16 site in three locales (ru, en, he). Lead forms are stored in PostgreSQL through Prisma.
 
