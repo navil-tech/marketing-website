@@ -20,6 +20,7 @@
     "control:run": "tsx control/run.ts",
     "control:verify": "tsx control/verify.ts",
     "control": "tsx control/run.ts && tsx control/verify.ts",
+    "control:field": "tsx control/field.ts",
     "control:plan": "tsx control/show-plan.ts",
     "control:selfcheck": "tsx control/selfcheck.ts"
   },
