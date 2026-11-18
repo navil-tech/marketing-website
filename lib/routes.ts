@@ -8,6 +8,8 @@ export const routes = {
   placeholder: "#",
 } as const;
 
+export const pageRoutes: readonly string[] = [routes.home, routes.carriers, routes.about, routes.thanks];
+
 export const navOrder = ["shippers", "carriers", "about"] as const;
 
 export type NavKey = (typeof navOrder)[number];

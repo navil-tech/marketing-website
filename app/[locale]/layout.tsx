@@ -19,7 +19,7 @@ const rubik = Rubik({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Novil",
+  title: "Navil",
 };
 
 export function generateStaticParams(): { locale: Locale }[] {
