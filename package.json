@@ -21,6 +21,7 @@
     "@prisma/adapter-pg": "7.10.1",
     "@prisma/client": "7.10.1",
     "dotenv": "18.0.8",
+    "isbot": "5.2.3",
     "lucide-react": "^1.57.0",
     "next": "16.4.3",
     "next-intl": "^4.14.9",

@@ -24,9 +24,70 @@ enum Region {
   OTHER
 }
 
+enum ClientKind {
+  BROWSER
+  BOT
+}
+
+enum EventType {
+  SESSION_STARTED
+  FORM_SUBMITTED
+  LEAD_SAVED
+  NOTIFICATION_CREATED
+}
+
+enum NotificationStatus {
+  CREATED
+  SENT
+  FAILED
+}
+
+model Session {
+  id         String   @id @default(uuid(7))
+  startedAt  DateTime @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+  lastSeenAt DateTime @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+
+  client      ClientKind
+  landingPath String
+  referrer    String?
+  userAgent   String?
+  ip          String?    @db.VarChar(45)
+
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  utmTerm     String?
+  utmContent  String?
+
+  leads  Lead[]
+  events Event[]
+
+  @@index([startedAt])
+}
+
+model Event {
+  id         BigInt   @id @default(autoincrement())
+  occurredAt DateTime @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+  type       EventType
+
+  sessionId String?
+  session   Session? @relation(fields: [sessionId], references: [id])
+  leadId    String?
+  lead      Lead?    @relation(fields: [leadId], references: [id])
+
+  requestId String?
+
+  @@index([sessionId, id])
+  @@index([leadId, id])
+  @@index([type, occurredAt])
+}
+
 model Lead {
   id        String   @id @default(uuid(7))
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  createdAt DateTime @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+
+  sessionId String?
+  session   Session? @relation(fields: [sessionId], references: [id])
 
   kind   LeadKind
   locale String   @db.VarChar(5)
@@ -41,23 +102,31 @@ model Lead {
   userAgent String?
   ip        String? @db.VarChar(45)
 
-  utmSource     String?
-  utmMedium     String?
-  utmCampaign   String?
-  utmTerm       String?
-  utmContent    String?
-  gclid         String?
-  fbclid        String?
-  landingPath   String?
-  firstReferrer String?
-  firstVisitAt  DateTime? @db.Timestamptz(3)
-
   consentGiven   Boolean
   consentVersion String
 
   isSpam Boolean
 
+  events       Event[]
+  notification Notification?
+
   @@index([createdAt])
   @@index([email])
   @@index([kind, createdAt])
+  @@index([sessionId])
+}
+
+model Notification {
+  id        String   @id @default(uuid(7))
+  createdAt DateTime @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+
+  leadId String @unique
+  lead   Lead   @relation(fields: [leadId], references: [id])
+
+  text   String
+  status NotificationStatus @default(CREATED)
+
+  sentAt            DateTime? @db.Timestamptz(3)
+  telegramMessageId Int?
+  error             String?
 }
