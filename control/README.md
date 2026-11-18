@@ -16,7 +16,10 @@ Each criterion is tested with a one-sided exact binomial test against the 95 % t
 
 The stand also runs a Telegram sink: a local server that accepts `sendMessage` calls. When the site is started with `npm run start:control`, every notification is sent there and the report counts the messages received with the same text as stored.
 
-The same scenarios are replayed through a baseline that has no identifiers: sessions are reconstructed from the gateway log by IP address, User-Agent and the 30-minute timeout, and the lead is matched by its stored IP, User-Agent and time.
+The same scenarios are judged for two solutions to compare with:
+
+- First touch, the usual scheme: the label and time of the browser's first visit are kept in a cookie and copied to the lead (`Lead.firstTouch`). It has no sessions, so only the label and the interval are judged, against the same journal.
+- No identifiers at all: sessions are reconstructed from the gateway log by IP address, User-Agent and the 30-minute timeout, and the lead is matched by its stored IP, User-Agent and time.
 
 ## Files
 
@@ -24,14 +27,19 @@ The same scenarios are replayed through a baseline that has no identifiers: sess
 | -------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `hypothesis.ts`                                    | thresholds of the hypothesis: 95 %, 1 s, α = 0.05                             |
 | `matrix.ts`                                        | the fixed list of scenarios                                                   |
+| `plan.ts`, `show-plan.ts`                          | checksum of the matrix and thresholds, and the commit a run was made from     |
 | `run.ts`, `scenarios.ts`, `browser.ts`             | running: entry point, behaviour of each scenario class, browser steps         |
 | `gateway.ts`, `sink.ts`                            | the stand's own records: access log and received Telegram messages            |
 | `verify.ts`, `judge.ts`, `baseline.ts`, `stats.ts` | checking: entry point, per-scenario verdicts, the baseline, the binomial test |
 | `report.ts`                                        | the report                                                                    |
+| `selfcheck.ts`                                     | check of the stand itself: distorted records must fail their criterion        |
+| `field.ts`                                         | the same three criteria on real leads, against the web server access log      |
 
 ## Scenarios
 
 The matrix is a fixed list of 93 scenarios in 13 classes: direct visit, browsing between pages, reload, moving to another form page, second tab (untagged and with another tagged link), second tagged link, session timeout, late submission, repeated submission, link preview bot before the visitor, two visitors behind one address, delayed submission (0.4 and 0.8 s) and disabled JavaScript. Every scenario has a browser profile, an entry page and locale, a form and a label variant.
+
+The matrix, the boundary set and the thresholds are fixed before a run. `npm run control:plan` prints their SHA-256 and the current commit; every run stores the same pair in `meta.json` and the report shows it. If the checksum at verification differs from the stored one, the run is not conclusive.
 
 Eight boundary scenarios run next to the matrix and are reported separately: cookies cleared before submission, bot-only visits, a filled honeypot field and a submission delayed by 1.8 s. They show how the system accounts for cases outside its limits.
 
@@ -51,6 +59,8 @@ npm run build && npm run start:control           # in another terminal
 npm run control                                  # run the scenarios, then verify
 ```
 
+`npm run control:selfcheck` checks the stand itself on a finished run (`CONTROL_RUN_ID`, the latest by default). It takes every scenario that passed all three criteria, applies 15 distortions to in-memory copies of its records and of its journal entry (a missing notification, another lead or session in the notification, a changed label, events out of order, times shifted by three tolerances and so on) and expects the verification to stop counting the scenario for the criterion the distortion targets. The database is not changed. The outcome is written to `selfcheck.md` and `selfcheck.json`; the command exits with an error if any distortion goes unnoticed.
+
 Results are written to `control/out/<run id>/`: `journal.jsonl` (the stand's own record), `access.log` (gateway log), `telegram.log` (messages received by the sink), `report.md` and `report.json`.
 
 Environment variables:
@@ -69,6 +79,24 @@ To have the notifications delivered to a real Telegram chat, start the site with
 If an engine is missing from `CONTROL_ENGINES`, its scenarios run on the first listed engine and the report is marked as a technical run: no conclusion about the thresholds is drawn from it. The engines the selected scenarios need are launched before the first scenario; if one fails to start, the run stops without writing results.
 
 Control data is recognisable by the `nv_scn` parameter in `Session.landingPath` and by the `@control.navil.test` mailbox domain. `reports/funnel.sql` excludes it.
+
+## Real leads
+
+The matrix is scripted, so its outcome says little about visitors the stand does not control. `npm run control:field` evaluates the same three criteria on real leads of a period, with the web server access log as the independent record: nginx writes one JSON line per request and passes its request id to the site, and the site stores the id in the events.
+
+| Criterion | A lead passes when                                                                                                                                                                                  |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Link      | it has a session and one notification that names this lead and this session, the events are in order, and the access log has both the page request that started the session and the form submission |
+| Label     | the label stored for the session and stated in the notification equals the label in the logged page request                                                                                         |
+| Interval  | `LEAD_SAVED − SESSION_STARTED` differs from the interval between the two logged requests by at most 1 s                                                                                             |
+
+A lead without a session fails all three. The test and the thresholds are the same as for the matrix. A conclusion needs at least 59 leads, the smallest sample in which zero failures confirm the 95 % threshold at α = 0.05; with fewer leads the report says that the data is insufficient. The report also counts the leads whose first-touch label differs from the logged one.
+
+```bash
+FIELD_FROM=2026-12-02 FIELD_TO=2026-12-24 FIELD_ACCESS_LOG=navil.access.log npm run control:field
+```
+
+`FIELD_ACCESS_LOG` takes a comma-separated list of files copied from the host. Control data and spam are excluded; `FIELD_INCLUDE_CONTROL=1` includes control data to check the command itself after a stand run through nginx. The report in `control/out/field-<from>_<to>/` lists lead ids only.
 
 ## Manual scenarios
 
