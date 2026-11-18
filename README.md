@@ -5,7 +5,7 @@ Next.js 16 site in three locales (ru, en, he). Visits, lead forms and notificati
 ## Local setup
 
 ```bash
-cp .env.example .env
+cp .env.example .env                          # then fill in the values
 npm install                                   # postinstall generates the prisma client
 docker compose -f docker-compose.dev.yml up -d
 npm run db:deploy                             # applies prisma/migrations
