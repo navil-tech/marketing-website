@@ -1,4 +1,5 @@
 import type { Engine, FormKind, Label } from "./matrix";
+import type { Plan } from "./plan";
 
 export interface NavRecord {
   nav: number;
@@ -36,4 +37,5 @@ export interface RunMeta {
   engines: Engine[];
   substituted: number;
   timeoutSeconds: number;
+  plan?: Plan;
 }

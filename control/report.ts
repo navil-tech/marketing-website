@@ -1,11 +1,13 @@
 import { ALPHA, THRESHOLD, TOLERANCE_MS } from "./hypothesis";
 import type { RunMeta } from "./journal";
 import { TIME_SHIFTED_CLASSES, type BoundaryVerdict, type Verdict } from "./judge";
+import { planSha256 } from "./plan";
 import { summarizeErrors, testProportion, type ErrorSummary, type ProportionTest } from "./stats";
 
 export interface Report {
   meta: RunMeta;
   conclusive: boolean;
+  planUnchanged: boolean | null;
   thresholds: { share: number; toleranceMs: number; alpha: number; plannedScenarios: number };
   system: {
     linked: ProportionTest;
@@ -32,9 +34,11 @@ export function buildReport(
   const errors = verdicts
     .map((verdict: Verdict) => verdict.errorMs)
     .filter((value: number | null): value is number => value !== null);
+  const planUnchanged = meta.plan === undefined ? null : meta.plan.sha256 === planSha256();
   return {
     meta,
-    conclusive: meta.substituted === 0 && verdicts.length === plannedScenarios,
+    conclusive: meta.substituted === 0 && verdicts.length === plannedScenarios && planUnchanged !== false,
+    planUnchanged,
     thresholds: { share: THRESHOLD, toleranceMs: TOLERANCE_MS, alpha: ALPHA, plannedScenarios },
     system: {
       linked: test((v: Verdict) => v.linked, verdicts),
@@ -94,8 +98,21 @@ export function renderSummary(report: Report): string {
     `run ${report.meta.runId}: ${report.verdicts.length} of ${report.thresholds.plannedScenarios} scenarios, ${report.meta.substituted} engine substitutions`,
     `linked ${system.linked.successes}/${system.linked.total}, label ${system.labelKept.successes}/${system.labelKept.total}, interval ${system.intervalWithin.successes}/${system.intervalWithin.total}`,
     `first touch: label ${report.firstTouch.labelKept.successes}/${report.firstTouch.labelKept.total}, interval ${report.firstTouch.intervalWithin.successes}/${report.firstTouch.intervalWithin.total}`,
+    `plan: ${report.meta.plan?.sha256 ?? "not recorded"}, unchanged: ${report.planUnchanged ?? "unknown"}`,
     `conclusive: ${report.conclusive}`,
   ].join("\n");
+}
+
+function renderPlan(report: Report): string {
+  const { plan } = report.meta;
+  if (plan === undefined) {
+    return "План прогона: контрольная сумма при запуске не записана.";
+  }
+  const commit = plan.commit ?? "не определён";
+  const state = plan.dirty === true ? " с незакоммиченными изменениями" : "";
+  const changed =
+    report.planUnchanged === false ? " Матрица или пороги изменены после запуска: вывод о гипотезе не выносится." : "";
+  return `План прогона: SHA-256 матрицы и порогов ${plan.sha256}, коммит ${commit}${state}.${changed}`;
 }
 
 export function renderReport(report: Report): string {
@@ -106,6 +123,7 @@ export function renderReport(report: Report): string {
     "",
     `Период: ${meta.startedAt} — ${meta.finishedAt}. Стенд: ${meta.target}. Движки: ${meta.engines.join(", ")}.`,
     `Сценариев выполнено: ${report.verdicts.length} из ${report.thresholds.plannedScenarios}. Подмен движка: ${meta.substituted}.`,
+    renderPlan(report),
     "",
     report.conclusive
       ? "Прогон полный: по нему выносится вывод о гипотезе."

@@ -19,7 +19,8 @@
     "db:studio": "prisma studio",
     "control:run": "tsx control/run.ts",
     "control:verify": "tsx control/verify.ts",
-    "control": "tsx control/run.ts && tsx control/verify.ts"
+    "control": "tsx control/run.ts && tsx control/verify.ts",
+    "control:plan": "tsx control/show-plan.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.10.1",
