@@ -1,4 +1,5 @@
 import { getPrisma } from "@/lib/db";
+import { parseFirstTouch } from "@/lib/first-touch";
 import type { Prisma } from "@/lib/generated/prisma/client";
 import { isSameLabel } from "@/lib/source-label";
 import { findSession, type HeuristicSession } from "./baseline";
@@ -33,6 +34,9 @@ export interface Verdict {
   baselineLabelKept: boolean;
   baselineIntervalWithin: boolean;
   baselineErrorMs: number | null;
+  firstTouchLabelKept: boolean;
+  firstTouchIntervalWithin: boolean;
+  firstTouchErrorMs: number | null;
   notes: string[];
 }
 
@@ -79,6 +83,9 @@ export async function judge(
     baselineLabelKept: false,
     baselineIntervalWithin: false,
     baselineErrorMs: null,
+    firstTouchLabelKept: false,
+    firstTouchIntervalWithin: false,
+    firstTouchErrorMs: null,
     notes: [],
   };
   const submit = entry.submits.at(-1);
@@ -113,6 +120,15 @@ export async function judge(
   }
   if (!verdict.intervalWithin) {
     verdict.notes.push(`interval: error ${verdict.errorMs ?? "n/a"} ms`);
+  }
+
+  const firstTouch = parseFirstTouch(lead.firstTouch);
+  if (firstTouch !== null) {
+    verdict.firstTouchLabelKept = isSameLabel(firstTouch, expected.label);
+    if (reference !== null) {
+      verdict.firstTouchErrorMs = lead.createdAt.getTime() - Date.parse(firstTouch.visitedAt) - reference;
+      verdict.firstTouchIntervalWithin = Math.abs(verdict.firstTouchErrorMs) <= TOLERANCE_MS;
+    }
   }
 
   if (verdict.baselineApplicable) {
