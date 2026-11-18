@@ -4,6 +4,8 @@ import { TIME_SHIFTED_CLASSES, type BoundaryVerdict, type Verdict } from "./judg
 import { planSha256 } from "./plan";
 import { summarizeErrors, testProportion, type ErrorSummary, type ProportionTest } from "./stats";
 
+const DELAYED_CLASS = "latency";
+
 export interface Report {
   meta: RunMeta;
   conclusive: boolean;
@@ -14,6 +16,8 @@ export interface Report {
     labelKept: ProportionTest;
     intervalWithin: ProportionTest;
     errors: ErrorSummary;
+    errorsWithoutDelay: ErrorSummary;
+    errorsWithDelay: ErrorSummary;
     delivered: number;
   };
   firstTouch: { labelKept: ProportionTest; intervalWithin: ProportionTest };
@@ -31,9 +35,9 @@ export function buildReport(
   const test = (pick: (verdict: Verdict) => boolean, list: Verdict[]): ProportionTest =>
     testProportion(list.filter(pick).length, list.length, THRESHOLD, ALPHA);
   const comparable = verdicts.filter((verdict: Verdict) => verdict.baselineApplicable);
-  const errors = verdicts
-    .map((verdict: Verdict) => verdict.errorMs)
-    .filter((value: number | null): value is number => value !== null);
+  const errorsOf = (list: Verdict[]): number[] =>
+    list.map((verdict: Verdict) => verdict.errorMs).filter((value: number | null): value is number => value !== null);
+  const delayed = (verdict: Verdict): boolean => verdict.class === DELAYED_CLASS;
   const planUnchanged = meta.plan === undefined ? null : meta.plan.sha256 === planSha256();
   return {
     meta,
@@ -44,7 +48,9 @@ export function buildReport(
       linked: test((v: Verdict) => v.linked, verdicts),
       labelKept: test((v: Verdict) => v.labelKept, verdicts),
       intervalWithin: test((v: Verdict) => v.intervalWithin, verdicts),
-      errors: summarizeErrors(errors),
+      errors: summarizeErrors(errorsOf(verdicts)),
+      errorsWithoutDelay: summarizeErrors(errorsOf(verdicts.filter((v: Verdict) => !delayed(v)))),
+      errorsWithDelay: summarizeErrors(errorsOf(verdicts.filter(delayed))),
       delivered: verdicts.filter((v: Verdict) => v.delivered).length,
     },
     firstTouch: {
@@ -139,7 +145,8 @@ export function renderReport(report: Report): string {
     renderTest("Метка источника сохранена", system.labelKept),
     renderTest("Интервал в пределах допуска", system.intervalWithin),
     "",
-    `Погрешность интервала: медиана ${system.errors.median.toFixed(0)} мс, максимум по модулю ${system.errors.maxAbsolute.toFixed(0)} мс.`,
+    `Погрешность интервала по модулю: медиана ${system.errors.median.toFixed(0)} мс, максимум ${system.errors.maxAbsolute.toFixed(0)} мс.`,
+    `Без заданной задержки отправки (${system.errorsWithoutDelay.count}): медиана ${system.errorsWithoutDelay.median.toFixed(0)} мс, максимум ${system.errorsWithoutDelay.maxAbsolute.toFixed(0)} мс. С задержкой (${system.errorsWithDelay.count}): медиана ${system.errorsWithDelay.median.toFixed(0)} мс, максимум ${system.errorsWithDelay.maxAbsolute.toFixed(0)} мс.`,
     "",
     system.delivered === 0
       ? "Доставка в приёмник Telegram в этом прогоне не проверялась: сайт запущен без адреса приёмника."

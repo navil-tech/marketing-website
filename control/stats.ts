@@ -37,12 +37,12 @@ export function summarizeErrors(errors: number[]): ErrorSummary {
   if (count === 0) {
     return { count, median: 0, maxAbsolute: 0 };
   }
-  const sorted = [...errors].sort((a: number, b: number) => a - b);
+  const sorted = errors.map((value: number) => Math.abs(value)).sort((a: number, b: number) => a - b);
   const middle = Math.floor(count / 2);
   return {
     count,
     median: count % 2 === 0 ? (sorted[middle - 1] + sorted[middle]) / 2 : sorted[middle],
-    maxAbsolute: Math.max(...errors.map((value: number) => Math.abs(value))),
+    maxAbsolute: sorted[count - 1],
   };
 }
 
