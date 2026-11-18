@@ -1,7 +1,8 @@
-import { ChevronRight, Mail, MessageCircle } from "lucide-react";
+import { ChevronRight, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { JSX } from "react";
 import { Link } from "@/i18n/navigation";
+import { SUPPORT_EMAIL, SUPPORT_MAILTO } from "@/lib/contacts";
 import { navOrder, navRoutes, routes, type NavKey } from "@/lib/routes";
 import styles from "./Footer.module.css";
 
@@ -17,25 +18,13 @@ export function Footer(): JSX.Element {
             <p className={styles.subtitle}>{t("subtitle")}</p>
           </div>
           <div className={styles.contacts}>
-            <a href={routes.placeholder} className={styles.contact}>
+            <a href={SUPPORT_MAILTO} className={styles.contact}>
               <span className={styles.contactIcon}>
                 <Mail size={22} />
               </span>
               <span className={styles.contactText}>
                 <span className={styles.contactLabel}>{t("emailLabel")}</span>
-                <span className={styles.contactValue}>{t("emailValue")}</span>
-              </span>
-              <span className={styles.contactChevron}>
-                <ChevronRight size={18} />
-              </span>
-            </a>
-            <a href={routes.placeholder} className={styles.contact}>
-              <span className={styles.contactIcon}>
-                <MessageCircle size={22} />
-              </span>
-              <span className={styles.contactText}>
-                <span className={styles.contactLabel}>{t("phoneLabel")}</span>
-                <span className={styles.contactValue}>{t("phoneValue")}</span>
+                <span className={styles.contactValue}>{SUPPORT_EMAIL}</span>
               </span>
               <span className={styles.contactChevron}>
                 <ChevronRight size={18} />
@@ -69,10 +58,7 @@ export function Footer(): JSX.Element {
             </div>
             <div className={`${styles.column} ${styles.contactColumn}`}>
               <span className={styles.columnTitle}>{t("contactTitle")}</span>
-              <a href={routes.placeholder} className={styles.columnLink}>
-                {t("whatsapp")}
-              </a>
-              <a href={routes.placeholder} className={styles.columnLink}>
+              <a href={SUPPORT_MAILTO} className={styles.columnLink}>
                 {t("email")}
               </a>
             </div>

@@ -29,9 +29,6 @@
     "title": "יצירת קשר",
     "subtitle": "עונים תוך יום.",
     "emailLabel": "אימייל",
-    "emailValue": "[כתובת]",
-    "phoneLabel": "טלפון ו-WhatsApp",
-    "phoneValue": "[מספר]",
     "brand": "Navil",
     "description": "Navil — פלטפורמה למציאת הובלות. גוש דן, ישראל.",
     "serviceTitle": "השירות",
@@ -39,7 +36,6 @@
     "privacy": "מדיניות פרטיות",
     "terms": "תנאי שימוש",
     "contactTitle": "דברו איתנו",
-    "whatsapp": "WhatsApp",
     "email": "אימייל",
     "copyright": "© 2026 Navil"
   },
@@ -286,7 +282,7 @@
   "thanks": {
     "metaTitle": "Navil — תודה",
     "title": "תודה, אתם ברשימה.",
-    "text": "ניצור קשר בימים הקרובים. אם רוצים לשאול משהו כבר עכשיו — כתבו לנו: <link>[איש קשר]</link>",
+    "text": "ניצור קשר בימים הקרובים. אם רוצים לשאול משהו כבר עכשיו — כתבו לנו: <link>{email}</link>",
     "home": "לדף הבית"
   }
 }

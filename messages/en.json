@@ -29,9 +29,6 @@
     "title": "Contact",
     "subtitle": "We reply within a day.",
     "emailLabel": "Email",
-    "emailValue": "[address]",
-    "phoneLabel": "Phone and WhatsApp",
-    "phoneValue": "[number]",
     "brand": "Navil",
     "description": "Navil is a marketplace for finding freight carriers. Gush Dan, Israel.",
     "serviceTitle": "Service",
@@ -39,7 +36,6 @@
     "privacy": "Privacy policy",
     "terms": "Terms of use",
     "contactTitle": "Get in touch",
-    "whatsapp": "WhatsApp",
     "email": "Email",
     "copyright": "© 2026 Navil"
   },
@@ -286,7 +282,7 @@
   "thanks": {
     "metaTitle": "Navil — thank you",
     "title": "Thanks, you're on the list.",
-    "text": "We'll be in touch in the next few days. If you want to ask something right now, write to us: <link>[contact]</link>",
+    "text": "We'll be in touch in the next few days. If you want to ask something right now, write to us: <link>{email}</link>",
     "home": "Back to home"
   }
 }
