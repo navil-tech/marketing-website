@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/navil-tech/marketing-website/compare/v1.1.0...v1.1.1) (2026-11-19)
+
+### Bug Fixes
+
+* **docker:** give node two seconds for a connection attempt ([f6769cf](https://github.com/navil-tech/marketing-website/commit/f6769cff11ed87590a22d0bc04e4d447d7d9ddbd))
+* **notifications:** retry failed connections, report unanswered sends ([ca48362](https://github.com/navil-tech/marketing-website/commit/ca48362194877d6590ed11c661fae38629fd4bdc))
+
 ## [1.1.0](https://github.com/navil-tech/marketing-website/compare/v1.0.1...v1.1.0) (2026-11-19)
 
 ### Features
