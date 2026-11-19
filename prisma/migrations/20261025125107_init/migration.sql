@@ -1,6 +1,9 @@
 -- CreateEnum
 CREATE TYPE "LeadKind" AS ENUM ('SHIPPER', 'CARRIER');
 
+-- CreateEnum
+CREATE TYPE "Region" AS ENUM ('TEL_AVIV', 'RAMAT_GAN_GIVATAYIM', 'BAT_YAM_HOLON', 'PETAH_TIKVA', 'RISHON_LEZION', 'HERZLIYA_RAANANA', 'BNEI_BRAK', 'WHOLE_COUNTRY', 'OTHER');
+
 -- CreateTable
 CREATE TABLE "Lead" (
     "id" TEXT NOT NULL,
@@ -10,7 +13,7 @@ CREATE TABLE "Lead" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "phone" TEXT,
-    "region" TEXT NOT NULL,
+    "region" "Region" NOT NULL,
     "vehicle" TEXT,
     "pageUrl" TEXT,
     "userAgent" TEXT,

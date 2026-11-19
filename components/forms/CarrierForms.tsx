@@ -1,17 +1,21 @@
 "use client";
 
-import { useLocale, useMessages, useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { JSX, ReactNode } from "react";
 import { submitCarrierApplication } from "@/app/actions";
 import { Consent, ConsentLink } from "./Consent";
-import { SelectField, TextField } from "./Field";
+import { CARRIER_REGIONS } from "@/lib/regions";
+import { SelectField, type SelectOption, TextField } from "./Field";
 import { Honeypot } from "./Honeypot";
 import styles from "./LeadForms.module.css";
 
 export function CarrierCardForm(): JSX.Element {
   const fields = useTranslations("fields");
   const t = useTranslations("carriers");
-  const regions: string[] = useMessages().carriers.form.regions;
+  const regions: SelectOption[] = CARRIER_REGIONS.map((region) => ({
+    value: region,
+    label: fields(`regions.${region}`),
+  }));
   const action = submitCarrierApplication.bind(null, useLocale());
   return (
     <form id="form" action={action} className={styles.card}>
@@ -89,7 +93,10 @@ export function CarrierCardForm(): JSX.Element {
 export function CarrierWideForm(): JSX.Element {
   const fields = useTranslations("fields");
   const t = useTranslations("carriers");
-  const regions: string[] = useMessages().carriers.form.regions;
+  const regions: SelectOption[] = CARRIER_REGIONS.map((region) => ({
+    value: region,
+    label: fields(`regions.${region}`),
+  }));
   const action = submitCarrierApplication.bind(null, useLocale());
   return (
     <form action={action} className={styles.wide}>

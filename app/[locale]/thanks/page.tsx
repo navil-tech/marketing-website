@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import type { JSX, ReactNode } from "react";
 import { ButtonLink } from "@/components/Button/Button";
+import { SUPPORT_EMAIL, SUPPORT_MAILTO } from "@/lib/contacts";
 import { routes } from "@/lib/routes";
 import styles from "./page.module.css";
 
@@ -28,8 +29,9 @@ export default function ThanksPage(): JSX.Element {
         <h1 className={styles.title}>{t("title")}</h1>
         <p className={styles.text}>
           {t.rich("text", {
+            email: SUPPORT_EMAIL,
             link: (chunks: ReactNode) => (
-              <a href={routes.placeholder} className={styles.link}>
+              <a href={SUPPORT_MAILTO} className={styles.link}>
                 {chunks}
               </a>
             ),

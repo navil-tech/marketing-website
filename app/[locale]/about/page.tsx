@@ -10,9 +10,19 @@ import { buildPageMetadata } from "@/lib/site";
 import styles from "./page.module.css";
 
 interface AboutFact {
+  value: string;
+  label: string;
+}
+
+interface AboutPrinciple {
   title: string;
   text: string;
-  mobileText: string;
+}
+
+interface AboutStep {
+  label: string;
+  title: string;
+  text: string;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -28,13 +38,25 @@ export default function AboutPage(): JSX.Element {
     <>
       <section className={styles.intro}>
         <div className={styles.inner}>
-          <div>
-            <div className={styles.eyebrow}>{t("eyebrow")}</div>
-            <h1 className={styles.title}>{t("title")}</h1>
-          </div>
-          <div className={styles.text}>
-            <p className={styles.lead}>{t("lead")}</p>
-            {page.paragraphs.map((paragraph: string) => (
+          <div className={styles.eyebrow}>{t("eyebrow")}</div>
+          <h1 className={styles.title}>{t("title")}</h1>
+          <p className={styles.lead}>{t("lead")}</p>
+          <dl className={styles.facts}>
+            {page.facts.map((fact: AboutFact) => (
+              <div key={fact.label} className={styles.fact}>
+                <dt className={styles.factLabel}>{fact.label}</dt>
+                <dd className={styles.factValue}>{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <section className={styles.band}>
+        <div className={`${styles.inner} ${styles.split}`}>
+          <h2 className={styles.sectionTitle}>{t("story.title")}</h2>
+          <div className={styles.story}>
+            {page.story.paragraphs.map((paragraph: string) => (
               <p key={paragraph} className={styles.paragraph}>
                 {paragraph}
               </p>
@@ -43,29 +65,48 @@ export default function AboutPage(): JSX.Element {
         </div>
       </section>
 
-      <section className={styles.israel}>
-        <div className={`${styles.inner} ${styles.israelInner}`}>
-          <h2 className={styles.israelTitle}>{t("israel.title")}</h2>
-          {page.israel.facts.map((fact: AboutFact) => (
-            <div key={fact.title}>
-              <h3 className={styles.factTitle}>{fact.title}</h3>
-              <p className={`${styles.factText} ${styles.factTextDesktop}`}>{fact.text}</p>
-              <p className={`${styles.factText} ${styles.factTextMobile}`}>{fact.mobileText}</p>
-            </div>
-          ))}
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <h2 className={styles.sectionTitle}>{t("principles.title")}</h2>
+          <ol className={styles.principles}>
+            {page.principles.items.map((principle: AboutPrinciple, index: number) => (
+              <li key={principle.title} className={styles.principle}>
+                <span className={styles.principleNumber}>{String(index + 1).padStart(2, "0")}</span>
+                <h3 className={styles.principleTitle}>{principle.title}</h3>
+                <p className={styles.principleText}>{principle.text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className={styles.band}>
+        <div className={`${styles.inner} ${styles.split}`}>
+          <h2 className={styles.sectionTitle}>{t("status.title")}</h2>
+          <ol className={styles.steps}>
+            {page.status.steps.map((step: AboutStep) => (
+              <li key={step.label} className={styles.step}>
+                <span className={styles.stepLabel}>{step.label}</span>
+                <div>
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <p className={styles.stepText}>{step.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
       <section className={styles.cards}>
         <div className={`${styles.inner} ${styles.cardsInner}`}>
-          <Link href={routes.shippers} className={`${styles.card} ${styles.cardShipper}`}>
+          <Link href={routes.shippers} className={styles.card}>
             <span>
               <span className={styles.cardEyebrow}>{t("shipperCard.eyebrow")}</span>
               <span className={styles.cardTitle}>{t("shipperCard.title")}</span>
             </span>
             <CardArrow />
           </Link>
-          <Link href={routes.carriers} className={`${styles.card} ${styles.cardCarrier}`}>
+          <Link href={routes.carriers} className={styles.card}>
             <span>
               <span className={styles.cardEyebrow}>{t("carrierCard.eyebrow")}</span>
               <span className={styles.cardTitle}>{t("carrierCard.title")}</span>

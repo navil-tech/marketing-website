@@ -45,3 +45,6 @@ next-env.d.ts
 messages/*.d.json.ts
 
 /lib/generated/
+
+# control runs
+/control/out/
