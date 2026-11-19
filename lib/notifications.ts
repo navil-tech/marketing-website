@@ -5,7 +5,19 @@ import ru from "@/messages/ru.json";
 
 const DEFAULT_TELEGRAM_API_URL = "https://api.telegram.org";
 
-const TELEGRAM_TIMEOUT_MS = 10_000;
+const TELEGRAM_TIMEOUT_MS = 30_000;
+
+const TELEGRAM_CONNECT_ATTEMPTS = 3;
+
+const CONNECT_ERROR_CODES: ReadonlySet<string> = new Set([
+  "ETIMEDOUT",
+  "ECONNREFUSED",
+  "ENETUNREACH",
+  "EHOSTUNREACH",
+  "ENOTFOUND",
+  "EAI_AGAIN",
+  "UND_ERR_CONNECT_TIMEOUT",
+]);
 
 const KIND_TITLES: Record<LeadKind, string> = {
   SHIPPER: "заказчик",
@@ -43,6 +55,11 @@ interface TelegramResponse {
   ok: boolean;
   description?: string;
   result?: { message_id: number };
+}
+
+interface DeliveryOutcome {
+  messageId: number | null;
+  error: string | null;
 }
 
 export function buildLeadMessage(lead: MessageLead, session: MessageSession | null): string {
@@ -124,27 +141,56 @@ function telegramConfig(): TelegramConfig | null {
   };
 }
 
-async function sendTelegramMessage(
-  config: TelegramConfig,
-  text: string,
-): Promise<{ messageId: number | null; error: string | null }> {
-  try {
-    const response = await fetch(`${config.apiUrl}/bot${config.token}/sendMessage`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        chat_id: config.chatId,
-        text,
-        ...(config.threadId === null ? {} : { message_thread_id: config.threadId }),
-      }),
-      signal: AbortSignal.timeout(TELEGRAM_TIMEOUT_MS),
-    });
-    const body = (await response.json()) as TelegramResponse;
-    if (!body.ok || body.result === undefined) {
-      return { messageId: null, error: body.description ?? `HTTP ${response.status}` };
+async function sendTelegramMessage(config: TelegramConfig, text: string): Promise<DeliveryOutcome> {
+  let lastCode = "";
+  for (let attempt = 1; attempt <= TELEGRAM_CONNECT_ATTEMPTS; attempt += 1) {
+    try {
+      return await requestTelegram(config, text);
+    } catch (error) {
+      const code = causeCode(error);
+      if (code === null || !CONNECT_ERROR_CODES.has(code)) {
+        return { messageId: null, error: describeFailure(error) };
+      }
+      console.warn("telegram connection failed", { attempt, attempts: TELEGRAM_CONNECT_ATTEMPTS, code });
+      lastCode = code;
     }
-    return { messageId: body.result.message_id, error: null };
-  } catch (error) {
-    return { messageId: null, error: error instanceof Error ? error.message : String(error) };
   }
+  return { messageId: null, error: `no connection to telegram in ${TELEGRAM_CONNECT_ATTEMPTS} attempts: ${lastCode}` };
+}
+
+async function requestTelegram(config: TelegramConfig, text: string): Promise<DeliveryOutcome> {
+  const response = await fetch(`${config.apiUrl}/bot${config.token}/sendMessage`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      chat_id: config.chatId,
+      text,
+      ...(config.threadId === null ? {} : { message_thread_id: config.threadId }),
+    }),
+    signal: AbortSignal.timeout(TELEGRAM_TIMEOUT_MS),
+  });
+  const body = (await response.json()) as TelegramResponse;
+  if (!body.ok || body.result === undefined) {
+    return { messageId: null, error: body.description ?? `HTTP ${response.status}` };
+  }
+  return { messageId: body.result.message_id, error: null };
+}
+
+function describeFailure(error: unknown): string {
+  if (!(error instanceof Error)) {
+    return String(error);
+  }
+  if (error.name === "TimeoutError") {
+    return `no answer from telegram in ${TELEGRAM_TIMEOUT_MS / 1000} s, delivery unknown`;
+  }
+  const code = causeCode(error);
+  return code === null ? error.message : `${error.message}: ${code}`;
+}
+
+function causeCode(error: unknown): string | null {
+  const cause: unknown = error instanceof Error ? error.cause : null;
+  if (!(cause instanceof Error) || !("code" in cause) || typeof cause.code !== "string") {
+    return null;
+  }
+  return cause.code;
 }
