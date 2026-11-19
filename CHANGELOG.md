@@ -1,3 +1,23 @@
+## [1.1.0](https://github.com/navil-tech/marketing-website/compare/v1.0.1...v1.1.0) (2026-11-19)
+
+### Features
+
+* **about:** rebuild the page around mission, principles and status ([3727ff2](https://github.com/navil-tech/marketing-website/commit/3727ff2fe9aa754df34f744518cfdbed4400a6a8))
+* **contacts:** replace contact placeholders with the support email ([6c4a288](https://github.com/navil-tech/marketing-website/commit/6c4a2887409accfaeb611bc1caa475a8a6aa9430))
+* **events:** record visits, leads and notifications as one event model ([be99aac](https://github.com/navil-tech/marketing-website/commit/be99aacf86f5c97bb8d1517b52f83a413660c6c6))
+* **leads:** store region as an enum instead of the localized label ([862600f](https://github.com/navil-tech/marketing-website/commit/862600f951febb8d2597e90061cd32cb547f6aea))
+* **leads:** store the first-touch label of the visitor on the lead ([7840086](https://github.com/navil-tech/marketing-website/commit/7840086ede7b8168508946c6001bb4493d4eab96))
+* **reports:** add the funnel and integrity report ([22efce0](https://github.com/navil-tech/marketing-website/commit/22efce051f71b2521436c3f772f5ff0198f8a9f8))
+
+### Bug Fixes
+
+* **about:** use the accent color for both audience cards ([f8303ee](https://github.com/navil-tech/marketing-website/commit/f8303eeb11ecf30dbb75c736bc31be0ca5bc3c23))
+* correct the brand name to navil ([7f960f8](https://github.com/navil-tech/marketing-website/commit/7f960f85cac9e72688a3fb76a6b0a92aa899a232))
+
+### CI
+
+* pin the runner to ubuntu-24.04 ([c76c436](https://github.com/navil-tech/marketing-website/commit/c76c436a03096af2b496533bf95de1fa6d0f883f))
+
 ## [1.0.1](https://github.com/navil-tech/marketing-website/compare/v1.0.0...v1.0.1) (2026-10-28)
 
 ### CI
