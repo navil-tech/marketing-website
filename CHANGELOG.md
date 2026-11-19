@@ -1,3 +1,9 @@
+## [1.1.2](https://github.com/navil-tech/marketing-website/compare/v1.1.1...v1.1.2) (2026-11-19)
+
+### Build
+
+* **deps:** bump next to 16.4.6 to fix security advisories ([4c0bc18](https://github.com/navil-tech/marketing-website/commit/4c0bc1884cecc9b0a9454de67b5642d381ad769f))
+
 ## [1.1.1](https://github.com/navil-tech/marketing-website/compare/v1.1.0...v1.1.1) (2026-11-19)
 
 ### Bug Fixes
