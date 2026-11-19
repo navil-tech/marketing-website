@@ -249,24 +249,72 @@
   "about": {
     "metaTitle": "Navil — about us",
     "eyebrow": "About us",
-    "title": "It started with our own move",
-    "lead": "The idea came from our own move: half a day on the phone, three different prices for the same job, and in the end a deal with someone we knew nothing about.",
-    "paragraphs": [
-      "We looked at how this market works in Israel and saw that it's barely touched by digital. Thousands of carriers, hundreds of thousands of moves a year — and no shared place where you can see them. Everyone gets by on their own: some through groups, some through friends, some through middlemen who take a cut simply for having a phone book.",
-      "Navil is an attempt to bring this market into one place. We have no trucks of our own and we take no money for the move. Our job is for you to find each other and know who you're dealing with. We're at the very beginning, so we'll talk to the first participants personally."
+    "title": "Finding a carrier in Israel should be easy",
+    "lead": "On Navil you describe the job, and carriers from your area respond on their own and name their price. We have no trucks of our own and take no money for the move.",
+    "facts": [
+      {
+        "value": "Gush Dan",
+        "label": "we start in the centre of the country"
+      },
+      {
+        "value": "Early 2027",
+        "label": "pilot launch"
+      },
+      {
+        "value": "3 languages",
+        "label": "Hebrew, Russian, English"
+      },
+      {
+        "value": "₪0",
+        "label": "commission on a move"
+      }
     ],
-    "israel": {
-      "title": "We're in Israel",
-      "facts": [
+    "story": {
+      "title": "Why we're doing this",
+      "paragraphs": [
+        "Today, finding a carrier in Israel means half a day on the phone, three different prices for the same job, and in the end a deal with someone you know nothing about. We've been through it ourselves.",
+        "This market has no shared place. Some look through groups, some through friends, some through middlemen who charge simply for having a phone book.",
+        "Navil brings shippers and carriers together in one place. Our job is simple: you find each other and know who you're dealing with."
+      ]
+    },
+    "principles": {
+      "title": "What we stand for",
+      "items": [
         {
-          "title": "Shabbat",
-          "text": "Each carrier states whether they work on Shabbat. Jobs on those days are shown only to those who do.",
-          "mobileText": "Each carrier states whether they work on Shabbat. Jobs on those days are shown only to those who do."
+          "title": "We're not a middleman",
+          "text": "We have no trucks of our own. You agree directly, and the carrier gets the money for the move."
         },
         {
-          "title": "Three languages",
-          "text": "Hebrew, Russian, English. The switch is in the site header.",
-          "mobileText": "Hebrew, Russian, English. The switch is in the site menu."
+          "title": "The price is known in advance",
+          "text": "It's fixed before the move and doesn't change on the spot."
+        },
+        {
+          "title": "You know who you're dealing with",
+          "text": "We check the licence, documents and insurance before a carrier sees any jobs. Reviews come only after a real move."
+        },
+        {
+          "title": "Built for Israel",
+          "text": "The site works in Hebrew, Russian and English. Each carrier decides whether they work on Shabbat."
+        }
+      ]
+    },
+    "status": {
+      "title": "Where we are now",
+      "steps": [
+        {
+          "label": "Now",
+          "title": "Collecting requests",
+          "text": "Shippers leave their contacts, carriers fill in the form. We talk to the first participants personally."
+        },
+        {
+          "label": "Early 2027",
+          "title": "Pilot in the centre of the country",
+          "text": "Taking part in the pilot is free."
+        },
+        {
+          "label": "Next",
+          "title": "The rest of the country",
+          "text": "We open new areas as carriers join. Those who left their contacts will hear first."
         }
       ]
     },
