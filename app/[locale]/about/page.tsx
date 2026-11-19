@@ -58,14 +58,14 @@ export default function AboutPage(): JSX.Element {
 
       <section className={styles.cards}>
         <div className={`${styles.inner} ${styles.cardsInner}`}>
-          <Link href={routes.shippers} className={`${styles.card} ${styles.cardShipper}`}>
+          <Link href={routes.shippers} className={styles.card}>
             <span>
               <span className={styles.cardEyebrow}>{t("shipperCard.eyebrow")}</span>
               <span className={styles.cardTitle}>{t("shipperCard.title")}</span>
             </span>
             <CardArrow />
           </Link>
-          <Link href={routes.carriers} className={`${styles.card} ${styles.cardCarrier}`}>
+          <Link href={routes.carriers} className={styles.card}>
             <span>
               <span className={styles.cardEyebrow}>{t("carrierCard.eyebrow")}</span>
               <span className={styles.cardTitle}>{t("carrierCard.title")}</span>

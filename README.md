@@ -5,7 +5,7 @@ Next.js 16 site in three locales (ru, en, he). Visits, lead forms and notificati
 ## Local setup
 
 ```bash
-cp .env.example .env
+cp .env.example .env                          # then fill in the values
 npm install                                   # postinstall generates the prisma client
 docker compose -f docker-compose.dev.yml up -d
 npm run db:deploy                             # applies prisma/migrations
@@ -27,14 +27,15 @@ Schema: `prisma/schema.prisma`. After changing it run `npm run db:migrate -- --n
 | `Notification` | Telegram message built from a saved lead, with its delivery status                                     |
 | `Event`        | step of the sequence: `SESSION_STARTED`, `FORM_SUBMITTED`, `LEAD_SAVED`, `NOTIFICATION_CREATED`        |
 
-| File                     | Role                                                                 |
-| ------------------------ | -------------------------------------------------------------------- |
-| `proxy.ts`               | decides which requests are page requests and sets the session cookie |
-| `lib/source-label.ts`    | reads the `utm_*` label from a link                                  |
-| `lib/sessions.ts`        | the session rule and the session records                             |
-| `lib/events.ts`          | the only place that writes events                                    |
-| `lib/lead-submission.ts` | form received, lead saved, notification created                      |
-| `lib/notifications.ts`   | message text and delivery to Telegram                                |
+| File                     | Role                                                                  |
+| ------------------------ | --------------------------------------------------------------------- |
+| `proxy.ts`               | decides which requests are page requests and sets the session cookie  |
+| `lib/source-label.ts`    | reads the `utm_*` label from a link                                   |
+| `lib/sessions.ts`        | the session rule and the session records                              |
+| `lib/first-touch.ts`     | the label of the first visit, kept in a cookie and copied to the lead |
+| `lib/events.ts`          | the only place that writes events                                     |
+| `lib/lead-submission.ts` | form received, lead saved, notification created                       |
+| `lib/notifications.ts`   | message text and delivery to Telegram                                 |
 
 `proxy.ts` registers every document request of a site page. The session id lives in the `nv_sid` cookie; a new session starts when the cookie is missing, when 30 minutes passed since the previous page request (`SESSION_TIMEOUT_SECONDS`), or when the request carries a source label different from the session's. Sessions are per browser, not per tab: a form submission belongs to the browser's current session, the one named by the cookie at the moment of submission, however long the form stayed open.
 
@@ -42,7 +43,9 @@ A request without the `Sec-Fetch-Dest` header (old browsers, bots) is treated as
 
 A lead is never dropped because of tracking: submitted without a session cookie, or when the event writes fail, it is saved with an empty `sessionId` and counted separately. A submission with a filled honeypot field is saved as spam and gets no notification. Notifications are sent once after the response; a message that was not delivered keeps the status `CREATED` or `FAILED` and shows up in `reports/funnel.sql`.
 
-All timestamps come from the database clock (`clock_timestamp()`), and `Event.id` gives the order of events. Time to lead is `LEAD_SAVED.occurredAt − SESSION_STARTED.occurredAt`.
+Next to the event model the site keeps the usual first-touch record: the first page request of a browser stores its label and time in the `nv_ft` cookie for 90 days, and a submitted form copies it to `Lead.firstTouch`. It does not take part in the event model; the control stand uses it as the solution to compare with.
+
+All timestamps of the event model come from the database clock (`clock_timestamp()`), and `Event.id` gives the order of events. Time to lead is `LEAD_SAVED.occurredAt − SESSION_STARTED.occurredAt`.
 
 `reports/funnel.sql` prints the early funnel and the integrity counters. `control/` holds the stand that checks the model against scripted scenarios, see `control/README.md`.
 

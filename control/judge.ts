@@ -1,18 +1,25 @@
 import { getPrisma } from "@/lib/db";
-import type { Prisma } from "@/lib/generated/prisma/client";
+import { parseFirstTouch } from "@/lib/first-touch";
+import type { Prisma, Session } from "@/lib/generated/prisma/client";
 import { isSameLabel } from "@/lib/source-label";
 import { findSession, type HeuristicSession } from "./baseline";
 import { NAV_MARKER, SCENARIO_MARKER, TOLERANCE_MS } from "./hypothesis";
 import type { JournalEntry, SubmitRecord } from "./journal";
 import type { Label } from "./matrix";
 
-type LeadRecord = Prisma.LeadGetPayload<{
+export type LeadRecord = Prisma.LeadGetPayload<{
   include: { session: { include: { events: true } }; notification: true; events: true };
 }>;
 
 type EventRecord = LeadRecord["events"][number];
 
-interface Chain {
+export const LEAD_INCLUDE = {
+  session: { include: { events: { orderBy: { id: "asc" } } } },
+  notification: true,
+  events: { orderBy: { id: "asc" } },
+} satisfies Prisma.LeadInclude;
+
+export interface Chain {
   started: EventRecord;
   submitted: EventRecord;
   saved: EventRecord;
@@ -33,6 +40,9 @@ export interface Verdict {
   baselineLabelKept: boolean;
   baselineIntervalWithin: boolean;
   baselineErrorMs: number | null;
+  firstTouchLabelKept: boolean;
+  firstTouchIntervalWithin: boolean;
+  firstTouchErrorMs: number | null;
   notes: string[];
 }
 
@@ -44,13 +54,23 @@ export interface BoundaryVerdict {
   notes: string[];
 }
 
+export interface Records {
+  leads(submit: SubmitRecord): Promise<LeadRecord[]>;
+  session(id: string): Promise<Session | null>;
+}
+
+export const databaseRecords: Records = {
+  leads: (submit: SubmitRecord) => getPrisma().lead.findMany({ where: { email: submit.email }, include: LEAD_INCLUDE }),
+  session: (id: string) => getPrisma().session.findUnique({ where: { id } }),
+};
+
 export const TIME_SHIFTED_CLASSES = ["timeout", "late-submit"];
 
-const LEAD_LINE = /^Заявка: (.+)$/m;
+export const LEAD_LINE = /^Заявка: (.+)$/m;
 
-const SESSION_LINE = /^Сессия: (.+)$/m;
+export const SESSION_LINE = /^Сессия: (.+)$/m;
 
-const SOURCE_LINE = /^Источник: (.+)$/m;
+export const SOURCE_LINE = /^Источник: (.+)$/m;
 
 const BOUNDARY_EXPECTATIONS: Record<string, string> = {
   "cookies-cleared": "заявка без сессии, уведомление с пометкой «не определена»",
@@ -64,6 +84,7 @@ export async function judge(
   entry: JournalEntry,
   heuristic: Map<string, HeuristicSession[]>,
   delivered: Set<string>,
+  records: Records = databaseRecords,
 ): Promise<Verdict> {
   const verdict: Verdict = {
     scenario: entry.scenario,
@@ -79,6 +100,9 @@ export async function judge(
     baselineLabelKept: false,
     baselineIntervalWithin: false,
     baselineErrorMs: null,
+    firstTouchLabelKept: false,
+    firstTouchIntervalWithin: false,
+    firstTouchErrorMs: null,
     notes: [],
   };
   const submit = entry.submits.at(-1);
@@ -87,7 +111,7 @@ export async function judge(
     verdict.notes.push(`scenario failed to run: ${entry.error ?? "no submission"}`);
     return verdict;
   }
-  const leads = await findLeads(submit);
+  const leads = await records.leads(submit);
   if (leads.length !== 1) {
     verdict.notes.push(`expected one lead, found ${leads.length}`);
     return verdict;
@@ -97,7 +121,7 @@ export async function judge(
   const marker = `${runId}-${entry.scenario}`;
   const reference = entryNav === undefined ? null : submit.sentAt - entryNav.sentAt;
 
-  const linkNotes = await checkLink(lead, submit, marker, expected.entryNav);
+  const linkNotes = await checkLink(lead, submit, marker, expected.entryNav, records);
   verdict.linked = linkNotes.length === 0;
   verdict.notes.push(...linkNotes);
   verdict.delivered = lead.notification !== null && delivered.has(lead.notification.text);
@@ -113,6 +137,15 @@ export async function judge(
   }
   if (!verdict.intervalWithin) {
     verdict.notes.push(`interval: error ${verdict.errorMs ?? "n/a"} ms`);
+  }
+
+  const firstTouch = parseFirstTouch(lead.firstTouch);
+  if (firstTouch !== null) {
+    verdict.firstTouchLabelKept = isSameLabel(firstTouch, expected.label);
+    if (reference !== null) {
+      verdict.firstTouchErrorMs = lead.createdAt.getTime() - Date.parse(firstTouch.visitedAt) - reference;
+      verdict.firstTouchIntervalWithin = Math.abs(verdict.firstTouchErrorMs) <= TOLERANCE_MS;
+    }
   }
 
   if (verdict.baselineApplicable) {
@@ -131,7 +164,13 @@ export async function judge(
   return verdict;
 }
 
-async function checkLink(lead: LeadRecord, submit: SubmitRecord, marker: string, entryNav: number): Promise<string[]> {
+async function checkLink(
+  lead: LeadRecord,
+  submit: SubmitRecord,
+  marker: string,
+  entryNav: number,
+  records: Records,
+): Promise<string[]> {
   if (lead.notification === null) {
     return ["link: notification is missing"];
   }
@@ -141,7 +180,7 @@ async function checkLink(lead: LeadRecord, submit: SubmitRecord, marker: string,
     notes.push("link: notification names another lead");
   }
   const sessionId = SESSION_LINE.exec(text)?.[1];
-  const session = sessionId === undefined ? null : await getPrisma().session.findUnique({ where: { id: sessionId } });
+  const session = sessionId === undefined ? null : await records.session(sessionId);
   if (session === null) {
     notes.push(`link: notification names no known session (${sessionId ?? "no line"})`);
     return notes;
@@ -183,7 +222,7 @@ function checkLabel(lead: LeadRecord, expected: Label): string[] {
   return notes;
 }
 
-function expectedSourceLine(label: Label): string {
+export function expectedSourceLine(label: Label): string {
   const parts: [string, string | null][] = [
     ["source", label.utmSource],
     ["medium", label.utmMedium],
@@ -218,7 +257,7 @@ export async function judgeBoundary(runId: string, entry: JournalEntry): Promise
     verdict.notes.push(`scenario failed to run: ${entry.error ?? "no submission"}`);
     return verdict;
   }
-  const leads = await findLeads(submit);
+  const leads = await databaseRecords.leads(submit);
   if (leads.length !== 1) {
     verdict.notes.push(`expected one lead, found ${leads.length}`);
     return verdict;
@@ -236,7 +275,7 @@ export async function judgeBoundary(runId: string, entry: JournalEntry): Promise
   if (entry.class === "slow-submit") {
     const entryNav = entry.navs.find((nav) => nav.nav === 1);
     const chain = eventChain(lead);
-    const linkNotes = await checkLink(lead, submit, `${runId}-${entry.scenario}`, 1);
+    const linkNotes = await checkLink(lead, submit, `${runId}-${entry.scenario}`, 1, databaseRecords);
     const errorMs =
       chain === null || entryNav === undefined
         ? null
@@ -247,18 +286,7 @@ export async function judgeBoundary(runId: string, entry: JournalEntry): Promise
   return verdict;
 }
 
-async function findLeads(submit: SubmitRecord): Promise<LeadRecord[]> {
-  return getPrisma().lead.findMany({
-    where: { email: submit.email },
-    include: {
-      session: { include: { events: { orderBy: { id: "asc" } } } },
-      notification: true,
-      events: { orderBy: { id: "asc" } },
-    },
-  });
-}
-
-function eventChain(lead: LeadRecord): Chain | null {
+export function eventChain(lead: LeadRecord): Chain | null {
   if (lead.session === null) {
     return null;
   }

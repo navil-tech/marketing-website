@@ -8,6 +8,7 @@ import { startGateway, type Gateway } from "./gateway";
 import { CONTROL_MAILBOX } from "./hypothesis";
 import type { JournalEntry, RunMeta } from "./journal";
 import { buildBoundarySet, buildMatrix, type BoundaryScenario, type Scenario } from "./matrix";
+import { currentPlan, describePlan } from "./plan";
 import { runBoundary, runScenario } from "./scenarios";
 import {
   accessLog,
@@ -29,6 +30,8 @@ const DELIVERY_SETTLE_MS = 1000;
 const DELIVERY_WAIT_LIMIT_MS = 15_000;
 
 async function main(): Promise<void> {
+  const plan = currentPlan();
+  console.log(describePlan(plan));
   const scenarios = buildMatrix().filter((scenario: Scenario) => only === undefined || only.includes(scenario.id));
   const boundary = buildBoundarySet().filter(
     (scenario: BoundaryScenario) => only === undefined || only.includes(scenario.id),
@@ -68,6 +71,7 @@ async function main(): Promise<void> {
     engines,
     substituted,
     timeoutSeconds: sessionTimeoutSeconds(),
+    plan,
   };
   writeFileSync(join(outDir, "meta.json"), JSON.stringify(meta, null, 2));
   console.log(`journal: ${join(outDir, "journal.jsonl")}`);

@@ -1,6 +1,12 @@
 import createMiddleware from "next-intl/middleware";
 import type { NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
+import {
+  captureFirstTouch,
+  FIRST_TOUCH_COOKIE,
+  firstTouchCookieOptions,
+  readFirstTouchCookie,
+} from "./lib/first-touch";
 import { pageRoutes } from "./lib/routes";
 import { clientIp, readSessionId, resolveSession, SESSION_COOKIE, sessionCookieOptions } from "./lib/sessions";
 import { readSourceLabel } from "./lib/source-label";
@@ -14,18 +20,23 @@ export default async function proxy(request: NextRequest): Promise<NextResponse>
   if (!isPageRequest(request)) {
     return response;
   }
+  const url = request.nextUrl;
+  const label = readSourceLabel(url.searchParams);
+  const secure = request.headers.get("x-forwarded-proto") === "https";
+  if (readFirstTouchCookie(request.cookies.get(FIRST_TOUCH_COOKIE)?.value) === null) {
+    const firstTouch = JSON.stringify(captureFirstTouch(label, new Date()));
+    response.cookies.set(FIRST_TOUCH_COOKIE, firstTouch, firstTouchCookieOptions(secure));
+  }
   try {
-    const url = request.nextUrl;
     const sessionId = await resolveSession({
       sessionId: readSessionId(request.cookies.get(SESSION_COOKIE)?.value),
       path: `${url.pathname}${url.search}`,
-      label: readSourceLabel(url.searchParams),
+      label,
       referrer: request.headers.get("referer"),
       userAgent: request.headers.get("user-agent"),
       ip: clientIp(request.headers.get("x-forwarded-for")),
       requestId: request.headers.get("x-request-id"),
     });
-    const secure = request.headers.get("x-forwarded-proto") === "https";
     response.cookies.set(SESSION_COOKIE, sessionId, sessionCookieOptions(secure));
   } catch (error) {
     console.error("page request is not registered", error);

@@ -5,6 +5,7 @@ import { after } from "next/server";
 import { HONEYPOT_FIELD } from "@/components/forms/Honeypot";
 import { redirect } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { FIRST_TOUCH_COOKIE, readFirstTouchCookie } from "@/lib/first-touch";
 import type { LeadKind } from "@/lib/generated/prisma/client";
 import { receiveForm, saveLead, type FormRequest } from "@/lib/lead-submission";
 import { LEAD_CONSENT_VERSION, parseCarrierApplication, parseShipperLead, type CarrierApplication } from "@/lib/leads";
@@ -34,6 +35,7 @@ async function readFormRequest(kind: LeadKind): Promise<FormRequest> {
   return receiveForm({
     kind,
     sessionId: readSessionId(cookieStore.get(SESSION_COOKIE)?.value),
+    firstTouch: readFirstTouchCookie(cookieStore.get(FIRST_TOUCH_COOKIE)?.value),
     pageUrl: headerStore.get("referer"),
     userAgent: headerStore.get("user-agent"),
     ip: clientIp(headerStore.get("x-forwarded-for")),

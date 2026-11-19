@@ -1,5 +1,6 @@
 import { getPrisma } from "@/lib/db";
 import { recordEvent } from "@/lib/events";
+import type { FirstTouch } from "@/lib/first-touch";
 import type { LeadKind, Prisma, Region } from "@/lib/generated/prisma/client";
 import { buildLeadMessage } from "@/lib/notifications";
 import { touchSession } from "@/lib/sessions";
@@ -7,6 +8,7 @@ import { touchSession } from "@/lib/sessions";
 export interface FormRequest {
   kind: LeadKind;
   sessionId: string | null;
+  firstTouch: FirstTouch | null;
   pageUrl: string | null;
   userAgent: string | null;
   ip: string | null;
@@ -80,6 +82,7 @@ function leadData(request: FormRequest, input: LeadInput): Prisma.LeadUncheckedC
     ...input,
     kind: request.kind,
     sessionId: request.sessionId,
+    ...(request.firstTouch === null ? {} : { firstTouch: request.firstTouch }),
     pageUrl: request.pageUrl,
     userAgent: request.userAgent,
     ip: request.ip,

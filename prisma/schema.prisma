@@ -89,6 +89,8 @@ model Lead {
   sessionId String?
   session   Session? @relation(fields: [sessionId], references: [id])
 
+  firstTouch Json?
+
   kind   LeadKind
   locale String   @db.VarChar(5)
 
