@@ -55,4 +55,6 @@ All timestamps of the event model come from the database clock (`clock_timestamp
 
 The container runs `prisma migrate deploy` and then `next start` on port 3000 as a non-root user, so every start applies pending migrations to `DATABASE_URL` before serving.
 
+`NODE_OPTIONS` in the image gives every connection attempt 2 seconds instead of Node's default 250 ms. On a host without IPv6 the default drops an IPv4 connection that takes longer and then fails on the unreachable IPv6 address; about 3 % of the requests to Telegram were lost this way.
+
 The app expects a reverse proxy that terminates TLS and sets `X-Forwarded-For`, `X-Forwarded-Proto` and `X-Request-Id`: the tracking cookies are `secure` when the forwarded protocol is `https`, the stored `ip` is the first entry of `X-Forwarded-For`, and the request id is written to the events so they can be matched with the proxy access log.
